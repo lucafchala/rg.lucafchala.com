@@ -162,6 +162,43 @@
       line-height: 1.5;
     }
 
+    /* ── Featured catalog card ── */
+    .featured-card {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      text-decoration: none;
+      background: linear-gradient(135deg, rgba(79,142,247,.08), rgba(124,92,252,.06));
+      border: 1.5px solid rgba(79,142,247,.3);
+      border-radius: 14px;
+      padding: 20px 22px;
+      gap: 18px;
+      transition: border-color .15s, background .15s;
+      margin-bottom: 12px;
+    }
+    .featured-card:active { border-color: var(--accent); background: rgba(79,142,247,.12); }
+    @media (hover: hover) {
+      .featured-card:hover {
+        border-color: var(--accent);
+        background: rgba(79,142,247,.12);
+        transform: translateY(-2px);
+      }
+    }
+    .featured-card .card-icon { font-size: 32px; line-height: 1; flex-shrink: 0; }
+    .featured-card .card-text { flex: 1; min-width: 0; }
+    .featured-card .card-label {
+      font-size: 10px; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 3px;
+    }
+    .featured-card .card-title {
+      font-size: 17px; font-weight: 700; color: #fff;
+      margin-bottom: 4px; letter-spacing: -.01em;
+    }
+    .featured-card .card-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .featured-card .card-arrow {
+      font-size: 18px; color: var(--accent); flex-shrink: 0; transition: color .15s;
+    }
+
     /* Cards stacked vertically on mobile, side-by-side on wider screens */
     .nav-grid {
       display: flex;
@@ -188,7 +225,6 @@
       padding: 18px 20px;
       gap: 16px;
       transition: border-color .15s, background .15s;
-      /* Bigger tap target feel */
       min-height: 80px;
     }
 
@@ -312,40 +348,50 @@
       <p>Digitalização e impressão do documento de identidade.</p>
     </div>
 
+    <a class="featured-card" href="catalog.html">
+      <div class="card-icon">🗂️</div>
+      <div class="card-text">
+        <div class="card-label">Passo 0</div>
+        <div class="card-title">Catálogo</div>
+        <div class="card-desc">Veja o que está disponível e escolha antes de começar.</div>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
     <div class="nav-grid">
       <a class="nav-card" href="scan.html">
         <div class="card-icon">🖨️</div>
         <div class="card-text">
           <div class="card-label">Guia 01</div>
           <div class="card-title">Escanear</div>
-          <div class="card-desc">Como digitalizar o RG em PDF no tamanho correto.</div>
-        </div>
-        <div class="card-arrow">→</div>
-      </a>
-      <a class="nav-card" href="print.html">
-        <div class="card-icon">📄</div>
-        <div class="card-text">
-          <div class="card-label">Guia 02</div>
-          <div class="card-title">Imprimir</div>
-          <div class="card-desc">Como imprimir sem bordas e no tamanho real.</div>
+          <div class="card-desc">Como digitalizar o documento em PDF no tamanho correto.</div>
         </div>
         <div class="card-arrow">→</div>
       </a>
       <a class="nav-card" href="send.html">
         <div class="card-icon">📤</div>
         <div class="card-text">
-          <div class="card-label">Guia 03</div>
+          <div class="card-label">Guia 02</div>
           <div class="card-title">Enviar</div>
-          <div class="card-desc">Como enviar o PDF com segurança antes da impressão.</div>
+          <div class="card-desc">Como enviar o PDF por WhatsApp ou e-mail.</div>
         </div>
         <div class="card-arrow">→</div>
       </a>
       <a class="nav-card" href="receive.html">
         <div class="card-icon">📥</div>
         <div class="card-text">
-          <div class="card-label">Guia 04</div>
+          <div class="card-label">Guia 03</div>
           <div class="card-title">Receber</div>
-          <div class="card-desc">Como verificar e descartar o arquivo após imprimir.</div>
+          <div class="card-desc">Como verificar o arquivo recebido antes de imprimir.</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a class="nav-card" href="print.html">
+        <div class="card-icon">📄</div>
+        <div class="card-text">
+          <div class="card-label">Guia 04</div>
+          <div class="card-title">Imprimir</div>
+          <div class="card-desc">Como imprimir sem bordas e no tamanho real.</div>
         </div>
         <div class="card-arrow">→</div>
       </a>

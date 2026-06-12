@@ -145,14 +145,7 @@
     .checklist li::before { content: '✓'; color: var(--ok); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
     .checklist li strong { color: var(--text); }
 
-    .blocklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .blocklist li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 13.5px; color: var(--muted); line-height: 1.55;
-    }
-    .blocklist li::before { content: '✕'; color: var(--danger); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-    .blocklist li strong { color: var(--text); }
-
+    /* ── Print guide shortcut ── */
     .print-ref {
       background: var(--surface); border: 1.5px solid var(--accent);
       border-radius: 12px; padding: 18px 20px;
@@ -162,7 +155,6 @@
     }
     .print-ref:active, .print-ref:hover { background: rgba(79,142,247,.08); }
     .print-ref-icon { font-size: 28px; flex-shrink: 0; }
-    .print-ref-text {}
     .print-ref-label {
       font-size: 10px; font-weight: 600; letter-spacing: .1em;
       text-transform: uppercase; color: var(--accent); margin-bottom: 2px;
@@ -207,192 +199,126 @@
   <div class="page-wrap">
 
     <nav class="topnav">
-      <a class="back-btn" href="index.html">← Início</a>
+      <a class="back-btn" href="send.html">← Enviar</a>
       <span class="breadcrumb">rg.lucafchala.com <span>/</span> receive</span>
     </nav>
 
     <header>
-      <div class="eyebrow">Guia 04 · Recebimento</div>
-      <h1>Como receber o PDF com segurança</h1>
-      <p class="subtitle">Verifique o arquivo recebido antes de abrir, confirme o conteúdo e descarte com segurança após a impressão.</p>
+      <div class="eyebrow">Guia 03 · Recebimento</div>
+      <h1>Como receber e verificar o PDF</h1>
+      <p class="subtitle">Checklist para conferir o arquivo recebido antes de imprimir e confirmar ao cliente.</p>
     </header>
 
-    <!-- 1. Verificar o remetente -->
+    <!-- 1. Verificar o arquivo -->
     <section class="section">
-      <h2><span class="sn">1</span> Verificar o remetente</h2>
-      <div class="card">
-        <ul class="checklist">
-          <li><strong>Remetente conhecido</strong> — você estava esperando esse arquivo de uma pessoa específica</li>
-          <li><strong>Canal esperado</strong> — chegou pelo canal combinado (ex: WhatsApp de um contato salvo, e-mail de endereço conhecido)</li>
-          <li><strong>Sem solicitação prévia estranha</strong> — você não foi pedido para clicar em link externo antes de receber</li>
-        </ul>
-      </div>
-      <div class="tip danger">
-        <span class="tip-icon">🚫</span>
-        <span>Se o arquivo veio de número desconhecido, e-mail suspeito ou grupo de WhatsApp, <strong>não abra</strong>. Entre em contato com o suposto remetente por outro canal para confirmar.</span>
-      </div>
-    </section>
-
-    <!-- 2. Verificar o arquivo -->
-    <section class="section">
-      <h2><span class="sn">2</span> Verificar o arquivo antes de abrir</h2>
+      <h2><span class="sn">1</span> Verificar o arquivo recebido</h2>
       <div class="card">
         <div class="setting-list">
           <div class="setting-row">
-            <span class="setting-key">Extensão do arquivo</span>
+            <span class="setting-key">Extensão</span>
             <span class="setting-val">
-              <strong>.pdf</strong> <span class="tag tag-ok">CORRETO</span>
+              <strong>.pdf</strong> <span class="tag tag-ok">OK</span>
               &nbsp;&nbsp;
-              <strong>.exe .zip .apk .scr</strong> <span class="tag tag-bad">NÃO ABRA</span>
+              <strong>.jpg .png foto</strong> <span class="tag tag-bad">PEDIR REENVIO</span>
             </span>
           </div>
           <div class="setting-row">
-            <span class="setting-key">Tamanho esperado</span>
-            <span class="setting-val">Entre <strong>100 KB e 5 MB</strong> por arquivo. Arquivos muito grandes ou muito pequenos podem indicar problema.</span>
+            <span class="setting-key">Tamanho</span>
+            <span class="setting-val">Entre <strong>100 KB e 5 MB</strong> por arquivo. Menor que isso pode indicar baixa qualidade.</span>
           </div>
           <div class="setting-row">
-            <span class="setting-key">Nome do arquivo</span>
-            <span class="setting-val">Preferencialmente <code>rg-frente.pdf</code> e <code>rg-verso.pdf</code> conforme combinado com o remetente.</span>
+            <span class="setting-key">Quantidade</span>
+            <span class="setting-val">Dois arquivos (frente + verso) ou um PDF com duas páginas.</span>
           </div>
         </div>
       </div>
       <div class="tip warn">
         <span class="tip-icon">⚠️</span>
-        <span>Arquivos PDF legítimos nunca precisam de permissão para executar programas ao abrir. Se o leitor de PDF pedir para ativar macros ou executar scripts, feche imediatamente.</span>
+        <span>Se o cliente enviou pela Galeria do WhatsApp em vez de Documento, chegará como imagem em vez de PDF. Peça para reenviar como <strong>Documento</strong>.</span>
       </div>
     </section>
 
-    <!-- 3. Abrir e conferir -->
+    <!-- 2. Conferir qualidade -->
     <section class="section">
-      <h2><span class="sn">3</span> Abrir e conferir o conteúdo</h2>
+      <h2><span class="sn">2</span> Conferir a qualidade do PDF</h2>
       <div class="card">
-        <h3>Aplicativo recomendado</h3>
-        <div class="setting-list">
-          <div class="setting-row">
-            <span class="setting-key">Windows</span>
-            <span class="setting-val"><strong>Adobe Acrobat Reader</strong> (preferencial) ou Microsoft Edge</span>
-          </div>
-          <div class="setting-row">
-            <span class="setting-key">macOS</span>
-            <span class="setting-val"><strong>Preview</strong> (nativo) ou Adobe Acrobat Reader</span>
-          </div>
-          <div class="setting-row">
-            <span class="setting-key">Android</span>
-            <span class="setting-val"><strong>Adobe Acrobat</strong> ou leitor de PDF nativo do dispositivo</span>
-          </div>
-          <div class="setting-row">
-            <span class="setting-key">iPhone / iPad</span>
-            <span class="setting-val"><strong>Arquivos</strong> (app nativo) ou Adobe Acrobat</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>O que verificar ao abrir</h3>
         <ul class="checklist">
-          <li><strong>Arquivo está protegido com senha</strong> — solicite a senha ao remetente se necessário. A senha deve chegar por canal diferente do arquivo.</li>
-          <li><strong>Frente e verso presentes</strong> — confirme que os dois arquivos foram recebidos (ou ambas as páginas, se enviado como arquivo único)</li>
-          <li><strong>Conteúdo legível</strong> — texto do nome, número e data de nascimento visíveis e nítidos</li>
-          <li><strong>Foto com qualidade</strong> — foto do titular sem pixelização excessiva ou cortes</li>
-          <li><strong>Sem cortes nas bordas</strong> — todos os cantos do documento visíveis dentro da página</li>
-          <li><strong>Orientação correta</strong> — o documento aparece na posição horizontal (paisagem), centralizado na página A4</li>
+          <li><strong>Abre sem erro</strong> — PDF não corrompido, sem mensagem de "arquivo inválido"</li>
+          <li><strong>Frente e verso presentes</strong> — ambos os lados do documento recebidos</li>
+          <li><strong>Texto legível</strong> — nome, número do documento e data de nascimento nítidos</li>
+          <li><strong>Foto sem pixelização</strong> — foto do titular com qualidade suficiente para impressão</li>
+          <li><strong>Sem cortes</strong> — todos os cantos do documento visíveis dentro da página A4</li>
+          <li><strong>Orientação correta</strong> — documento na posição horizontal, centralizado na página</li>
         </ul>
       </div>
       <div class="tip info">
         <span class="tip-icon">ℹ️</span>
-        <span>Se algum ponto acima não estiver correto, avise o remetente antes de imprimir — é mais fácil reenviar um arquivo correto do que reimprimir.</span>
+        <span>Se qualquer item acima não estiver ok, contate o cliente para reenviar antes de imprimir. É mais eficiente do que descobrir o problema depois da impressão.</span>
       </div>
     </section>
 
-    <!-- 4. Pronto para imprimir -->
+    <!-- 3. Confirmar ao cliente -->
+    <section class="section">
+      <h2><span class="sn">3</span> Confirmar ao cliente</h2>
+      <div class="card">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Arquivo OK → confirme o recebimento</strong>
+              <p>Responda pelo mesmo canal (WhatsApp ou e-mail) informando que o arquivo foi recebido e está correto.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Arquivo com problema → peça reenvio</strong>
+              <p>Descreva o problema de forma simples: <em>"O arquivo chegou como foto, por favor reenvie como Documento no WhatsApp"</em> ou <em>"Faltou o verso, pode reenviar?"</em></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>Informe o prazo de impressão</strong>
+              <p>Se necessário, comunique quando a impressão ficará pronta.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Imprimir -->
     <section class="section">
       <h2><span class="sn">4</span> Pronto para imprimir</h2>
       <p style="color:var(--muted); margin-bottom:16px; font-size:14px; line-height:1.6">
-        Arquivo verificado e conteúdo confirmado? Siga o guia de impressão para garantir o tamanho correto.
+        Arquivo verificado e cliente confirmado? Siga o guia de impressão.
       </p>
 
       <a class="print-ref" href="print.html">
         <div class="print-ref-icon">📄</div>
-        <div class="print-ref-text">
-          <div class="print-ref-label">Guia 02</div>
+        <div>
+          <div class="print-ref-label">Guia 04</div>
           <div class="print-ref-title">Como imprimir o RG corretamente</div>
           <div class="print-ref-desc">Escala 100%, A4, sem redimensionamento.</div>
         </div>
         <div class="print-ref-arrow">→</div>
       </a>
-
-      <div class="card">
-        <h3>Resumo dos pontos críticos</h3>
-        <div class="setting-list">
-          <div class="setting-row">
-            <span class="setting-key">Escala de impressão</span>
-            <span class="setting-val"><strong>100% / Tamanho real</strong> — nunca "Ajustar ao papel"</span>
-          </div>
-          <div class="setting-row">
-            <span class="setting-key">Tamanho do papel</span>
-            <span class="setting-val"><strong>A4</strong> — confirme no software e nas propriedades da impressora</span>
-          </div>
-          <div class="setting-row">
-            <span class="setting-key">Orientação</span>
-            <span class="setting-val"><strong>Retrato (Portrait)</strong></span>
-          </div>
-          <div class="setting-row">
-            <span class="setting-key">Qualidade</span>
-            <span class="setting-val"><strong>Normal</strong> ou <strong>Alta</strong> — nunca Rascunho</span>
-          </div>
-          <div class="setting-row">
-            <span class="setting-key">Verificação final</span>
-            <span class="setting-val">Meça com régua: <strong>85,6 mm × 54 mm</strong> exatos</span>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- 5. Após imprimir -->
     <section class="section">
       <h2><span class="sn">5</span> Após imprimir</h2>
       <div class="card">
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-body">
-              <strong>Confirme a impressão antes de descartar o arquivo</strong>
-              <p>Verifique que o impresso está correto (tamanho, legibilidade, sem cortes) antes de apagar o PDF.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <div class="step-body">
-              <strong>Delete o arquivo PDF do dispositivo</strong>
-              <p>Localize na pasta de Downloads (ou onde foi salvo) e apague. Faça o mesmo com versões em outros dispositivos.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <div class="step-body">
-              <strong>Esvazie a lixeira</strong>
-              <p>Arquivos excluídos ficam recuperáveis até a lixeira ser esvaziada.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">4</div>
-            <div class="step-body">
-              <strong>Avise o remetente que imprimiu e apagou</strong>
-              <p>Assim ele pode revogar acessos do Drive e fazer a limpeza no lado dele.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">5</div>
-            <div class="step-body">
-              <strong>Não encaminhe o arquivo para terceiros</strong>
-              <p>O PDF contém dados pessoais — encaminhar sem autorização do titular é uma violação de privacidade.</p>
-            </div>
-          </div>
-        </div>
+        <ul class="checklist">
+          <li><strong>Confira o impresso antes de apagar o arquivo</strong> — tamanho 85,6 mm × 54 mm, texto legível, sem cortes</li>
+          <li><strong>Delete o PDF do dispositivo</strong> — apague da pasta de Downloads e qualquer outra cópia local</li>
+          <li><strong>Esvazie a lixeira</strong> — arquivos excluídos ficam recuperáveis até a lixeira ser esvaziada</li>
+          <li><strong>Avise o cliente</strong> — informe que a impressão foi feita e o arquivo foi descartado</li>
+        </ul>
       </div>
       <div class="tip ok">
         <span class="tip-icon">✅</span>
-        <span>Após apagar o arquivo e confirmar ao remetente, sua responsabilidade sobre o documento termina. O impresso fica apenas com quem precisava.</span>
+        <span>Arquivo apagado e cliente avisado — ciclo encerrado com segurança para ambas as partes.</span>
       </div>
     </section>
 

@@ -93,16 +93,50 @@
     }
     @media (min-width: 480px) { .card { padding: 22px 20px; } }
 
-    .steps { display: flex; flex-direction: column; gap: 14px; }
-    .step { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; }
+    /* ── Large steps for non-technical audience ── */
+    .steps { display: flex; flex-direction: column; gap: 18px; }
+    .step { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
     .step-num {
-      width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--border);
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, rgba(79,142,247,.18), rgba(124,92,252,.18));
+      border: 1.5px solid rgba(79,142,247,.3);
       display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 600; color: var(--muted); flex-shrink: 0; margin-top: 1px;
+      font-size: 14px; font-weight: 700; color: var(--accent); flex-shrink: 0; margin-top: 2px;
     }
-    .step-body strong { color: #fff; font-weight: 600; font-size: 14px; line-height: 1.4; }
-    .step-body p { color: var(--muted); margin-top: 4px; font-size: 13.5px; line-height: 1.55; }
+    .step-body strong {
+      color: #fff; font-weight: 600; font-size: 15px; line-height: 1.4;
+      display: block; margin-bottom: 4px;
+    }
+    .step-body p { color: var(--muted); font-size: 13.5px; line-height: 1.55; }
+    .step-body .note {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 8px; font-size: 12.5px; color: #d4a04e;
+      background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.2);
+      border-radius: 6px; padding: 6px 10px; line-height: 1.4;
+    }
 
+    /* ── Contact box ── */
+    .contact-box {
+      background: linear-gradient(135deg, rgba(79,142,247,.08), rgba(124,92,252,.06));
+      border: 1.5px solid rgba(79,142,247,.25);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 10px;
+    }
+    .contact-box .contact-label {
+      font-size: 10px; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+      font-family: var(--mono);
+    }
+    .contact-box .contact-value {
+      font-size: 18px; font-weight: 700; color: #fff;
+      font-family: var(--mono); letter-spacing: .02em;
+    }
+    .contact-box .contact-hint {
+      font-size: 12.5px; color: var(--muted); margin-top: 4px;
+    }
+
+    /* ── Tabs ── */
     .tabs-wrap {
       overflow-x: auto; -webkit-overflow-scrolling: touch;
       margin-bottom: 16px; scrollbar-width: none;
@@ -128,24 +162,7 @@
     .tip.info   { background: rgba(79,142,247,.08); border: 1px solid rgba(79,142,247,.2); }
     .tip.warn   { background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.25); color: #d4a04e; }
     .tip.ok     { background: rgba(62,207,110,.07); border: 1px solid rgba(62,207,110,.2); color: #58c47b; }
-    .tip.danger { background: rgba(247,95,95,.07); border: 1px solid rgba(247,95,95,.2); color: #e87878; }
     .tip-icon   { font-size: 15px; flex-shrink: 0; line-height: 1.55; }
-
-    .setting-list { display: flex; flex-direction: column; }
-    .setting-row {
-      display: flex; flex-direction: column; gap: 3px;
-      padding: 12px 0; border-bottom: 1px solid rgba(37,42,56,.7);
-    }
-    .setting-row:last-child { border-bottom: none; }
-    @media (min-width: 480px) {
-      .setting-row { flex-direction: row; gap: 12px; align-items: flex-start; }
-    }
-    .setting-key { font-size: 12px; color: var(--muted); flex-shrink: 0; }
-    @media (min-width: 480px) {
-      .setting-key { width: 180px; padding-top: 1px; font-size: 13px; }
-    }
-    .setting-val { font-size: 13.5px; color: var(--text); }
-    .setting-val strong { color: #fff; }
 
     .checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
     .checklist li {
@@ -154,14 +171,6 @@
     }
     .checklist li::before { content: '✓'; color: var(--ok); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
     .checklist li strong { color: var(--text); }
-
-    .blocklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .blocklist li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 13.5px; color: var(--muted); line-height: 1.55;
-    }
-    .blocklist li::before { content: '✕'; color: var(--danger); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-    .blocklist li strong { color: var(--text); }
 
     code {
       font-family: var(--mono); font-size: 12px; background: rgba(255,255,255,.06);
@@ -199,237 +208,151 @@
   <div class="page-wrap">
 
     <nav class="topnav">
-      <a class="back-btn" href="index.html">← Início</a>
+      <a class="back-btn" href="scan.html">← Escanear</a>
       <span class="breadcrumb">rg.lucafchala.com <span>/</span> send</span>
     </nav>
 
     <header>
-      <div class="eyebrow">Guia 03 · Envio</div>
-      <h1>Como enviar o PDF com segurança</h1>
-      <p class="subtitle">Confirme o arquivo, escolha o canal certo e proteja os dados pessoais durante o envio.</p>
+      <div class="eyebrow">Guia 02 · Envio</div>
+      <h1>Como enviar o PDF</h1>
+      <p class="subtitle">Você digitalizou o documento. Agora envie o arquivo PDF — por WhatsApp ou e-mail, em menos de 1 minuto.</p>
     </header>
 
-    <!-- 1. Verificar antes de enviar -->
+    <!-- 1. O que você vai enviar -->
     <section class="section">
-      <h2><span class="sn">1</span> Verificar antes de enviar</h2>
+      <h2><span class="sn">1</span> Antes de enviar</h2>
       <div class="card">
         <ul class="checklist">
-          <li><strong>Formato PDF confirmado</strong> — extensão <code>.pdf</code>, não <code>.jpg</code>, <code>.png</code> ou foto tirada com celular</li>
-          <li><strong>Arquivo abre corretamente</strong> — abra o PDF e confira que frente e verso estão legíveis e sem cortes</li>
-          <li><strong>Tamanho razoável</strong> — entre 100 KB e 5 MB por arquivo; arquivos muito pequenos podem ter baixa qualidade</li>
-          <li><strong>Nome identificável</strong> — renomeie para <code>rg-frente.pdf</code> e <code>rg-verso.pdf</code> antes de enviar</li>
+          <li><strong>O arquivo é um PDF</strong> — extensão <code>.pdf</code>. Se você seguiu o Guia 01, já está certo.</li>
+          <li><strong>Tem frente e verso</strong> — dois arquivos separados ou duas páginas no mesmo PDF.</li>
+          <li><strong>Consegue abrir</strong> — abra o arquivo e confirme que a imagem do documento está visível.</li>
         </ul>
       </div>
       <div class="tip warn">
         <span class="tip-icon">⚠️</span>
-        <span>Nunca envie foto do RG no lugar do PDF. Apps comprimem imagens automaticamente, degradando a qualidade necessária para impressão no tamanho correto.</span>
+        <span>Não envie foto tirada com o celular no lugar do PDF. A foto perde qualidade ao ser comprimida e não serve para impressão em tamanho correto.</span>
       </div>
     </section>
 
-    <!-- 2. Canal de envio -->
+    <!-- 2. Como enviar -->
     <section class="section">
-      <h2><span class="sn">2</span> Escolher o canal de envio</h2>
+      <h2><span class="sn">2</span> Enviar o arquivo</h2>
+
       <div class="tabs-wrap">
         <div class="tabs">
           <button class="tab active" onclick="showCh('whatsapp', event)">WhatsApp</button>
           <button class="tab" onclick="showCh('email', event)">E-mail</button>
-          <button class="tab" onclick="showCh('drive', event)">Google Drive</button>
         </div>
       </div>
 
       <!-- WhatsApp -->
       <div class="ch-content active" id="ch-whatsapp">
+        <div class="contact-box">
+          <div class="contact-label">Enviar para</div>
+          <div class="contact-value">[número do WhatsApp]</div>
+          <div class="contact-hint">Salve o contato antes de enviar.</div>
+        </div>
         <div class="card">
-          <h3>WhatsApp — recomendado para agilidade</h3>
+          <h3>Passo a passo — WhatsApp</h3>
           <div class="steps">
             <div class="step">
               <div class="step-num">1</div>
               <div class="step-body">
-                <strong>Abra a conversa direta com o destinatário</strong>
-                <p>Use conversa individual — nunca envie em grupos.</p>
+                <strong>Abra o WhatsApp e encontre o contato</strong>
+                <p>Acesse a conversa com o contato salvo acima.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">2</div>
               <div class="step-body">
-                <strong>Toque no clipe (anexo) → "Documento"</strong>
-                <p>Nunca use "Galeria" ou "Foto" — isso converte o arquivo para imagem e perde o formato PDF.</p>
+                <strong>Toque no clipe (📎) e escolha "Documento"</strong>
+                <p>Importante: selecione <strong>"Documento"</strong>, não "Galeria" nem "Foto".</p>
+                <span class="note">⚠️ Enviar pela Galeria transforma o PDF em imagem e perde qualidade.</span>
               </div>
             </div>
             <div class="step">
               <div class="step-num">3</div>
               <div class="step-body">
-                <strong>Localize e selecione o arquivo PDF</strong>
-                <p>Navegue até a pasta onde está o arquivo. Confirme o nome antes de enviar.</p>
+                <strong>Encontre o arquivo PDF e selecione</strong>
+                <p>Normalmente está na pasta <strong>Downloads</strong> ou <strong>Documentos</strong> do celular.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">4</div>
               <div class="step-body">
-                <strong>Envie e aguarde a confirmação</strong>
-                <p>Espere os dois tiques azuis (mensagem lida). Em seguida, peça confirmação de que o arquivo abriu.</p>
+                <strong>Toque em Enviar</strong>
+                <p>Aguarde o upload completar. Se tiver frente e verso separados, repita para o segundo arquivo.</p>
               </div>
             </div>
           </div>
           <div class="tip ok">
-            <span class="tip-icon">🔒</span>
-            <span>O WhatsApp usa <strong>criptografia de ponta a ponta</strong>. O arquivo trafega criptografado e fica acessível apenas para você e o destinatário.</span>
-          </div>
-          <div class="tip danger">
-            <span class="tip-icon">🚫</span>
-            <span>Nunca envie em grupos públicos ou de trabalho — qualquer membro terá acesso permanente ao arquivo com dados pessoais.</span>
+            <span class="tip-icon">✅</span>
+            <span>Pronto! Você receberá uma confirmação assim que o arquivo for verificado.</span>
           </div>
         </div>
       </div>
 
       <!-- E-mail -->
       <div class="ch-content" id="ch-email">
+        <div class="contact-box">
+          <div class="contact-label">Enviar para</div>
+          <div class="contact-value">[endereço de e-mail]</div>
+          <div class="contact-hint">Assunto: PDF para impressão.</div>
+        </div>
         <div class="card">
-          <h3>E-mail</h3>
+          <h3>Passo a passo — E-mail</h3>
           <div class="steps">
             <div class="step">
               <div class="step-num">1</div>
               <div class="step-body">
-                <strong>Crie um novo e-mail e insira o endereço do destinatário</strong>
-                <p>Confirme o endereço antes de enviar — verifique letra por letra para evitar envio errado.</p>
+                <strong>Abra seu aplicativo de e-mail</strong>
+                <p>Gmail, Outlook, ou qualquer outro que você usa.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">2</div>
               <div class="step-body">
-                <strong>Coloque assunto claro</strong>
-                <p>Ex: <em>"PDF do RG para impressão"</em> — facilita o destinatário identificar o e-mail.</p>
+                <strong>Crie um novo e-mail</strong>
+                <p>Para: <strong>[endereço de e-mail]</strong><br>Assunto: <strong>PDF para impressão</strong></p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">3</div>
               <div class="step-body">
-                <strong>Anexe o PDF pelo botão de anexo</strong>
-                <p>Não cole o conteúdo no corpo do e-mail. Anexe o arquivo original.</p>
+                <strong>Anexe o arquivo PDF</strong>
+                <p>Toque no clipe ou em "Anexar arquivo". Selecione o PDF — não cole no corpo do e-mail.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num">4</div>
               <div class="step-body">
-                <strong>Envie e peça confirmação de recebimento</strong>
-                <p>Solicite uma resposta simples quando o destinatário receber e conseguir abrir.</p>
+                <strong>Envie</strong>
+                <p>Se tiver frente e verso separados, anexe os dois arquivos no mesmo e-mail.</p>
               </div>
             </div>
           </div>
-          <div class="tip info">
-            <span class="tip-icon">ℹ️</span>
-            <span>Prefira Gmail ou Outlook — ambos usam TLS em trânsito. Evite provedores desconhecidos. Confirme que está enviando do seu endereço correto.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Google Drive -->
-      <div class="ch-content" id="ch-drive">
-        <div class="card">
-          <h3>Google Drive / iCloud Drive</h3>
-          <div class="steps">
-            <div class="step">
-              <div class="step-num">1</div>
-              <div class="step-body">
-                <strong>Faça upload do PDF</strong>
-                <p>Acesse o Drive → Novo → Upload de arquivo. Aguarde o upload completar.</p>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num">2</div>
-              <div class="step-body">
-                <strong>Clique com o botão direito → Compartilhar</strong>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num">3</div>
-              <div class="step-body">
-                <strong>Adicione apenas o e-mail do destinatário</strong>
-                <p>Permissão: <strong>Leitor</strong>. Nunca selecione "Qualquer pessoa com o link".</p>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num">4</div>
-              <div class="step-body">
-                <strong>Copie o link e envie pelo WhatsApp ou e-mail</strong>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num">5</div>
-              <div class="step-body">
-                <strong>Após confirmação de impressão, remova o acesso</strong>
-                <p>Abra Compartilhar novamente → clique no e-mail do destinatário → remover acesso.</p>
-              </div>
-            </div>
-          </div>
-          <div class="tip danger">
-            <span class="tip-icon">🚫</span>
-            <span>Nunca use <strong>"Qualquer pessoa com o link"</strong>. Se o link vazar por acidente (forward, histórico de chat), qualquer pessoa terá acesso ao documento.</span>
+          <div class="tip ok">
+            <span class="tip-icon">✅</span>
+            <span>Pronto! Você receberá uma confirmação de resposta assim que o arquivo for verificado.</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 3. Proteger com senha -->
+    <!-- 3. Depois de enviar -->
     <section class="section">
-      <h2><span class="sn">3</span> Proteger o PDF com senha</h2>
-      <p style="color:var(--muted); margin-bottom:16px; font-size:14px; line-height:1.6">
-        Adicionar senha garante que, mesmo que o arquivo chegue a alguém errado, não consiga ser aberto. Recomendado especialmente ao enviar por e-mail ou Drive.
-      </p>
-      <div class="card">
-        <div class="setting-list">
-          <div class="setting-row">
-            <span class="setting-key">PDF24 (online, gratuito)</span>
-            <span class="setting-val">Acesse <strong>pdf24.org</strong> → Proteger PDF → faça upload → defina a senha → baixe o arquivo protegido</span>
-          </div>
-          <div class="setting-row">
-            <span class="setting-key">Adobe Acrobat (pago)</span>
-            <span class="setting-val">Ferramentas → Proteger → Proteger com senha → defina e confirme a senha → Salvar</span>
-          </div>
-          <div class="setting-row">
-            <span class="setting-key">macOS — Preview</span>
-            <span class="setting-val">Arquivo → Exportar como PDF → Permissões de segurança → Exigir senha para abertura → defina a senha</span>
-          </div>
-        </div>
-      </div>
-      <div class="tip ok">
-        <span class="tip-icon">🔐</span>
-        <span><strong>Envie a senha por canal diferente do arquivo.</strong> Ex: envie o PDF por e-mail e a senha separadamente pelo WhatsApp. Assim, interceptar um canal não basta.</span>
-      </div>
-    </section>
-
-    <!-- 4. Confirmar recebimento -->
-    <section class="section">
-      <h2><span class="sn">4</span> Confirmar o recebimento</h2>
+      <h2><span class="sn">3</span> Depois de enviar</h2>
       <div class="card">
         <ul class="checklist">
-          <li><strong>Peça confirmação ativa</strong> — o destinatário deve responder que recebeu e conseguiu abrir o arquivo</li>
-          <li><strong>Confirme ambos os arquivos</strong> — frente e verso recebidos e legíveis</li>
-          <li><strong>Defina prazo para impressão</strong> — o PDF não deve ficar parado sem necessidade no dispositivo do destinatário</li>
-          <li><strong>Peça aviso após imprimir</strong> — para que você saiba que pode revogar acessos e fazer limpeza</li>
+          <li><strong>Aguarde a confirmação</strong> — você receberá uma mensagem ou resposta de e-mail confirmando o recebimento</li>
+          <li><strong>Não precisa fazer mais nada</strong> — o arquivo será verificado e a impressão será providenciada</li>
+          <li><strong>Dúvidas?</strong> — entre em contato pelo mesmo canal que usou para enviar</li>
         </ul>
-      </div>
-    </section>
-
-    <!-- 5. Após o envio -->
-    <section class="section">
-      <h2><span class="sn">5</span> Após o envio</h2>
-      <div class="card">
-        <ul class="checklist">
-          <li><strong>Revogar acesso no Drive</strong> — se enviou via Drive, remova o compartilhamento assim que receber confirmação de impressão</li>
-          <li><strong>Apagar cópias temporárias</strong> — delete versões que ficaram em Downloads, Desktop ou outros locais temporários</li>
-          <li><strong>Esvaziar a lixeira</strong> — arquivos na lixeira ainda ocupam espaço e podem ser recuperados</li>
-          <li><strong>Guardar o original com segurança</strong> — mantenha uma cópia do PDF original em local controlado (disco local criptografado ou nuvem privada)</li>
-        </ul>
-      </div>
-      <div class="tip info">
-        <span class="tip-icon">ℹ️</span>
-        <span>Quanto menos cópias de documentos pessoais existirem em lugares diferentes, menor a superfície de exposição. Centralize, não pulverize.</span>
       </div>
     </section>
 
     <div class="page-nav">
-      <a class="nav-link" href="index.html">← Início</a>
+      <a class="nav-link" href="scan.html">← Escanear</a>
       <a class="nav-link next" href="receive.html">Receber →</a>
     </div>
 
