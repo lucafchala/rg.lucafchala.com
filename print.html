@@ -40,9 +40,7 @@
     }
     #auth-block.hidden { display: none; }
 
-    .page-wrap {
-      max-width: 780px; margin: 0 auto; padding: 0 16px 80px;
-    }
+    .page-wrap { max-width: 780px; margin: 0 auto; padding: 0 16px 80px; }
     @media (min-width: 600px) { .page-wrap { padding: 0 24px 80px; } }
 
     .topnav {
@@ -62,9 +60,7 @@
     @media (min-width: 480px) { .breadcrumb { max-width: unset; font-size: 12px; } }
     .breadcrumb span { color: var(--border); margin: 0 4px; }
 
-    header {
-      padding: 0 0 28px; border-bottom: 1px solid var(--border); margin-bottom: 36px;
-    }
+    header { padding: 0 0 28px; border-bottom: 1px solid var(--border); margin-bottom: 36px; }
     .eyebrow {
       font-size: 11px; font-weight: 600; letter-spacing: .12em;
       text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
@@ -97,15 +93,22 @@
     }
     @media (min-width: 480px) { .card { padding: 22px 20px; } }
 
-    .steps { display: flex; flex-direction: column; gap: 14px; }
-    .step { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; }
+    /* ── Steps — larger gradient circles ── */
+    .steps { display: flex; flex-direction: column; gap: 18px; }
+    .step { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
     .step-num {
-      width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--border);
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, rgba(79,142,247,.18), rgba(124,92,252,.18));
+      border: 1.5px solid rgba(79,142,247,.3);
       display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 600; color: var(--muted); flex-shrink: 0; margin-top: 1px;
+      font-size: 14px; font-weight: 700; color: var(--accent);
+      flex-shrink: 0; margin-top: 2px;
     }
-    .step-body strong { color: #fff; font-weight: 600; font-size: 14px; line-height: 1.4; }
-    .step-body p { color: var(--muted); margin-top: 4px; font-size: 13.5px; line-height: 1.55; }
+    .step-body strong {
+      color: #fff; font-weight: 600; font-size: 15px; line-height: 1.4;
+      display: block; margin-bottom: 4px;
+    }
+    .step-body p { color: var(--muted); font-size: 13.5px; line-height: 1.6; }
 
     /* ── OS tabs ── */
     .tabs-wrap {
@@ -136,29 +139,18 @@
     .tip.ok    { background: rgba(62,207,110,.07); border: 1px solid rgba(62,207,110,.2); color: #58c47b; }
     .tip-icon  { font-size: 15px; flex-shrink: 0; line-height: 1.55; }
 
-    /* ── Setting list — stacks on mobile ── */
+    /* ── Setting list ── */
     .setting-list { display: flex; flex-direction: column; }
     .setting-row {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(37,42,56,.7);
+      display: flex; flex-direction: column; gap: 3px;
+      padding: 12px 0; border-bottom: 1px solid rgba(37,42,56,.7);
     }
     .setting-row:last-child { border-bottom: none; }
     @media (min-width: 480px) {
-      .setting-row {
-        flex-direction: row;
-        gap: 12px;
-        align-items: flex-start;
-      }
+      .setting-row { flex-direction: row; gap: 12px; align-items: flex-start; }
     }
-    .setting-key {
-      font-size: 12px; color: var(--muted); flex-shrink: 0;
-    }
-    @media (min-width: 480px) {
-      .setting-key { width: 160px; padding-top: 1px; font-size: 13px; }
-    }
+    .setting-key { font-size: 12px; color: var(--muted); flex-shrink: 0; }
+    @media (min-width: 480px) { .setting-key { width: 160px; padding-top: 1px; font-size: 13px; } }
     .setting-val { font-size: 13.5px; color: var(--text); }
     .setting-val strong { color: #fff; }
     .setting-val .tag {
@@ -170,34 +162,24 @@
     .tag-bad { background: rgba(247,95,95,.1); border: 1px solid rgba(247,95,95,.25); color: var(--danger); }
 
     /* ── Checklist ── */
-    .checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: 12px; }
     .checklist li {
       display: flex; align-items: flex-start; gap: 10px;
-      font-size: 13.5px; color: var(--muted); line-height: 1.55;
+      font-size: 14px; color: var(--muted); line-height: 1.55;
     }
-    .checklist li::before { content: '✓'; color: var(--ok); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .checklist li::before { content: '✓'; color: var(--ok); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
     .checklist li strong { color: var(--text); }
 
-    /* ── Problems table ── */
-    .prob-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .prob-table th {
-      text-align: left; font-size: 10px; font-weight: 600;
-      letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
-      padding: 8px 12px; border-bottom: 1px solid var(--border);
-    }
-    .prob-table td {
-      padding: 10px 12px; border-bottom: 1px solid rgba(37,42,56,.7);
-      color: var(--muted); vertical-align: top;
-    }
-    .prob-table tr:last-child td { border-bottom: none; }
-    .prob-table td:first-child { color: var(--text); font-weight: 500; }
-    .prob-table .col-causa { display: none; }
-    @media (min-width: 560px) { .prob-table .col-causa { display: table-cell; } }
+    /* ── Problem list ── */
+    .prob-list { display: flex; flex-direction: column; }
+    .prob-item { padding: 14px 0; border-bottom: 1px solid rgba(37,42,56,.7); }
+    .prob-item:last-child { border-bottom: none; }
+    .prob-q { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .prob-a { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
 
     code {
       font-family: var(--mono); font-size: 12px; background: rgba(255,255,255,.06);
       border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; color: #c5d0e6;
-      word-break: break-all;
     }
 
     .page-nav {
@@ -230,37 +212,37 @@
   <div class="page-wrap">
 
     <nav class="topnav">
-      <a class="back-btn" href="index.html">← Início</a>
+      <a class="back-btn" href="receive.html">← Receber</a>
       <span class="breadcrumb">rg.lucafchala.com <span>/</span> print</span>
     </nav>
 
     <header>
       <div class="eyebrow">Guia 04 · Impressão</div>
-      <h1>Como imprimir o RG corretamente</h1>
-      <p class="subtitle">Imprima o PDF em escala 100%, sem redimensionamento — o RG sai no tamanho real do documento físico.</p>
+      <h1>Como imprimir o documento</h1>
+      <p class="subtitle">Um único detalhe faz toda a diferença: imprimir em tamanho real (100%), sem deixar o computador reduzir a imagem.</p>
     </header>
 
-    <!-- 1. Conceito -->
+    <!-- 1. O único detalhe importante -->
     <section class="section">
-      <h2><span class="sn">1</span> O que significa "sem bordas"</h2>
+      <h2><span class="sn">1</span> O único detalhe importante</h2>
       <div class="card">
-        <p style="color:var(--muted); font-size:14px; margin-bottom:14px; line-height:1.6">
-          Não significa imprimir até a borda física do papel. Significa <strong style="color:var(--text)">não deixar o software encolher a imagem</strong> para encaixá-la nas margens da impressora.
+        <p style="color:var(--muted); font-size:14px; margin-bottom:16px; line-height:1.6">
+          Quando você manda imprimir um PDF, o computador costuma <strong style="color:var(--text)">reduzir automaticamente a imagem</strong> para ela "caber" bem na folha. Para documentos de identidade, isso não pode acontecer — o documento precisa sair no tamanho original.
         </p>
         <div class="setting-list">
           <div class="setting-row">
-            <span class="setting-key">Correto</span>
-            <span class="setting-val"><strong>Tamanho real / 100%</strong> — imagem no tamanho original do PDF <span class="tag tag-ok">USE</span></span>
+            <span class="setting-key">O que usar</span>
+            <span class="setting-val"><strong>Tamanho real</strong> ou <strong>100%</strong> <span class="tag tag-ok">CORRETO</span></span>
           </div>
           <div class="setting-row">
-            <span class="setting-key">Errado</span>
-            <span class="setting-val"><strong>Ajustar ao papel / Fit to page</strong> — software encolhe a imagem <span class="tag tag-bad">EVITE</span></span>
+            <span class="setting-key">O que evitar</span>
+            <span class="setting-val"><strong>Ajustar ao papel / Fit to page</strong> <span class="tag tag-bad">ERRADO</span></span>
           </div>
         </div>
       </div>
       <div class="tip ok">
         <span class="tip-icon">📏</span>
-        <span><strong>Como verificar:</strong> meça o RG impresso. Deve ter exatamente <strong>85,6 mm × 54 mm</strong> — igual ao original físico.</span>
+        <span>Para verificar se ficou certo: meça com régua. O documento deve ter exatamente <strong>85,6 mm × 54 mm</strong> — o mesmo tamanho do documento físico original.</span>
       </div>
     </section>
 
@@ -269,22 +251,26 @@
       <h2><span class="sn">2</span> Antes de imprimir</h2>
       <div class="card">
         <ul class="checklist">
-          <li><strong>Papel A4</strong> — 75 g/m² ou superior</li>
-          <li><strong>Tinta/toner suficiente</strong> — tinta baixa desbota cores e marcas de segurança</li>
-          <li><strong>PDF em mãos</strong> — <code>rg-frente.pdf</code> e <code>rg-verso.pdf</code></li>
-          <li><strong>Adobe Acrobat Reader</strong> — mais confiável para controle de escala. Evite imprimir direto do navegador.</li>
+          <li><strong>Papel A4 na impressora</strong> — não use papel carta (menor) nem ofício (maior)</li>
+          <li><strong>Tinta ou toner com quantidade suficiente</strong> — cores fracas comprometem a legibilidade</li>
+          <li><strong>Os arquivos PDF disponíveis</strong> — frente e verso separados ou num único PDF de 2 páginas</li>
+          <li><strong>Adobe Acrobat Reader instalado</strong> — é o mais confiável para garantir a escala. Gratuito em adobe.com/reader</li>
         </ul>
+      </div>
+      <div class="tip info">
+        <span class="tip-icon">ℹ️</span>
+        <span>Evite imprimir diretamente pelo navegador (Chrome, Edge) — eles costumam ativar "ajustar ao papel" sem avisar. Use sempre o Adobe Reader.</span>
       </div>
     </section>
 
-    <!-- 3. Por sistema operacional -->
+    <!-- 3. Passo a passo -->
     <section class="section">
-      <h2><span class="sn">3</span> Passo a passo por sistema</h2>
+      <h2><span class="sn">3</span> Passo a passo</h2>
       <div class="tabs-wrap">
         <div class="tabs">
-          <button class="tab active" onclick="showOS('adobe', event)">Windows — Adobe Reader</button>
-          <button class="tab" onclick="showOS('edge', event)">Windows — Edge / Foxit</button>
-          <button class="tab" onclick="showOS('mac', event)">macOS — Preview</button>
+          <button class="tab active" onclick="showOS('adobe', event)">Adobe Reader</button>
+          <button class="tab" onclick="showOS('edge', event)">Edge ou Chrome</button>
+          <button class="tab" onclick="showOS('mac', event)">macOS</button>
         </div>
       </div>
 
@@ -293,36 +279,98 @@
         <div class="card">
           <h3>Adobe Acrobat Reader — recomendado</h3>
           <div class="steps">
-            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Abra o PDF no Adobe Reader</strong><p>Clique com o botão direito no arquivo → <em>Abrir com → Adobe Acrobat Reader</em>.</p></div></div>
-            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Ctrl+P</strong><p>Abre o diálogo de impressão.</p></div></div>
-            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Seção "Tamanho e tratamento de páginas"</strong><p>Clique em <strong>"Tamanho"</strong>.</p></div></div>
-            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Marque "Tamanho real"</strong><p>O campo de escala deve mostrar <strong>100%</strong>. Não use <em>Ajustar</em>, <em>Reduzir</em> ou <em>Ampliar</em>.</p></div></div>
-            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Papel: A4, Orientação: Retrato</strong></div></div>
-            <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Propriedades da impressora</strong><p>Clique em <em>Propriedades</em> → Papel: <em>A4</em> → Layout: <em>Retrato, 1 página por folha</em>. Ative <em>Impressão sem margens</em> se disponível.</p></div></div>
-            <div class="step"><div class="step-num">7</div><div class="step-body"><strong>Imprima</strong><p>Repita para o verso se tiver dois arquivos separados.</p></div></div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Abra o PDF com o Adobe Reader</strong>
+                <p>Clique com o botão direito no arquivo → Abrir com → Adobe Acrobat Reader.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Abra a janela de impressão</strong>
+                <p>Pressione <strong>Ctrl+P</strong> ou vá em Arquivo → Imprimir.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Em "Tamanho e tratamento de páginas", clique em "Tamanho"</strong>
+                <p>Essa seção fica no lado esquerdo do painel de impressão.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Selecione "Tamanho real"</strong>
+                <p>O campo de escala deve mostrar <strong>100%</strong>. Não use <em>Ajustar</em>, <em>Reduzir</em> ou <em>Ampliar</em>.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <strong>Confirme: papel A4, orientação Retrato</strong>
+                <p>Verifique na pré-visualização que o documento aparece centralizado na página.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">6</div>
+              <div class="step-body">
+                <strong>Imprima</strong>
+                <p>Repita para o verso se tiver dois arquivos separados.</p>
+              </div>
+            </div>
           </div>
-          <div class="tip info">
-            <span class="tip-icon">ℹ️</span>
-            <span>O Adobe Reader mostra uma pré-visualização ao vivo. Confirme que o RG aparece centralizado na página, sem estar colado nas bordas.</span>
+          <div class="tip ok">
+            <span class="tip-icon">✅</span>
+            <span>O Adobe Reader mostra uma pré-visualização ao vivo. Se o documento parece pequeno na página, a escala está reduzida — corrija antes de imprimir.</span>
           </div>
         </div>
       </div>
 
-      <!-- Edge / Foxit -->
+      <!-- Edge / Chrome -->
       <div class="os-content" id="os-edge">
         <div class="card">
-          <h3>Microsoft Edge / Foxit PDF Reader</h3>
+          <h3>Microsoft Edge ou Chrome</h3>
           <div class="steps">
-            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Abra o PDF</strong><p>Duplo clique ou arraste para a janela do programa.</p></div></div>
-            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Ctrl+P</strong></div></div>
-            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Escala: "Tamanho real" ou "100%"</strong><p>Desmarque <em>"Ajustar ao papel"</em> se estiver marcado.</p></div></div>
-            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Papel: A4, Retrato</strong></div></div>
-            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Mais configurações → Opções da impressora</strong><p>Papel: A4, margens mínimas ou sem margens se disponível.</p></div></div>
-            <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Imprima</strong></div></div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Abra o PDF no navegador</strong>
+                <p>Arraste o arquivo para a janela do Edge ou Chrome.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Abra a janela de impressão</strong>
+                <p>Pressione <strong>Ctrl+P</strong>.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Procure a opção de Escala e defina como 100%</strong>
+                <p>Se encontrar <em>"Ajustar ao papel"</em> marcado, desmarque.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Papel A4, orientação Retrato</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <strong>Imprima</strong>
+              </div>
+            </div>
           </div>
           <div class="tip warn">
             <span class="tip-icon">⚠️</span>
-            <span>O <strong>Edge</strong> frequentemente força "Ajustar ao papel" por padrão. Se não encontrar a opção 100%, use o <strong>Adobe Reader</strong>.</span>
+            <span>O Edge e o Chrome frequentemente ativam "Ajustar ao papel" por padrão. Se não encontrar a opção de 100%, <strong>use o Adobe Reader</strong> — é mais confiável.</span>
           </div>
         </div>
       </div>
@@ -332,13 +380,45 @@
         <div class="card">
           <h3>macOS — Preview</h3>
           <div class="steps">
-            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Abra o PDF no Preview</strong><p>Duplo clique no arquivo.</p></div></div>
-            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Cmd+P</strong></div></div>
-            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Tamanho do papel: A4</strong></div></div>
-            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Escala: 100%</strong><p>Desmarque <em>"Escalar para ajustar"</em> se aparecer.</p></div></div>
-            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Orientação: Retrato</strong></div></div>
-            <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Menu suspenso da impressora → Layout</strong><p>1 página por folha. Se disponível: ative <em>Impressão sem bordas</em>.</p></div></div>
-            <div class="step"><div class="step-num">7</div><div class="step-body"><strong>Imprima</strong></div></div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Abra o PDF no Preview</strong>
+                <p>Duplo clique no arquivo.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Abra a janela de impressão</strong>
+                <p>Pressione <strong>Cmd+P</strong> ou Arquivo → Imprimir.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Tamanho do papel: A4</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Escala: 100%</strong>
+                <p>Desmarque <em>"Escalar para ajustar"</em> se aparecer marcado.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <strong>Orientação: Retrato</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">6</div>
+              <div class="step-body">
+                <strong>Imprima</strong>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -346,98 +426,84 @@
 
     <!-- 4. Configurações da impressora -->
     <section class="section">
-      <h2><span class="sn">4</span> Configurações da impressora</h2>
-      <p style="color:var(--muted); margin-bottom:16px; font-size:14px; line-height:1.6">
-        Além do software de leitura, verifique nas <strong style="color:var(--text)">Propriedades da impressora</strong>:
+      <h2><span class="sn">4</span> Confirme nas configurações da impressora</h2>
+      <p style="color:var(--muted); font-size:14px; margin-bottom:14px; line-height:1.6">
+        Além do software, a própria impressora tem configurações que podem reduzir a imagem. Verifique:
       </p>
       <div class="card">
         <div class="setting-list">
           <div class="setting-row">
             <span class="setting-key">Tamanho do papel</span>
-            <span class="setting-val"><strong>A4</strong> — nunca deixe em "automático"</span>
+            <span class="setting-val"><strong>A4</strong> — nunca deixe em "Automático"</span>
           </div>
           <div class="setting-row">
             <span class="setting-key">Orientação</span>
-            <span class="setting-val"><strong>Retrato (Portrait)</strong></span>
+            <span class="setting-val"><strong>Retrato</strong></span>
           </div>
           <div class="setting-row">
-            <span class="setting-key">Páginas por folha</span>
-            <span class="setting-val"><strong>1</strong></span>
+            <span class="setting-key">Escala</span>
+            <span class="setting-val"><strong>100%</strong> — se houver essa opção, confirme</span>
           </div>
           <div class="setting-row">
             <span class="setting-key">Qualidade</span>
             <span class="setting-val"><strong>Normal</strong> ou <strong>Alta</strong> — nunca Rascunho</span>
           </div>
           <div class="setting-row">
-            <span class="setting-key">Escala / Zoom</span>
-            <span class="setting-val"><strong>100%</strong></span>
-          </div>
-          <div class="setting-row">
-            <span class="setting-key">Sem bordas</span>
-            <span class="setting-val"><strong>Ative se disponível</strong> — elimina redução automática de margem</span>
+            <span class="setting-key">Páginas por folha</span>
+            <span class="setting-val"><strong>1</strong></span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 5. Verificação final -->
+    <!-- 5. Verifique o resultado -->
     <section class="section">
-      <h2><span class="sn">5</span> Verificação final</h2>
+      <h2><span class="sn">5</span> Verifique o resultado</h2>
       <div class="card">
         <ul class="checklist">
-          <li><strong>Meça com régua</strong> — 85,6 mm × 54 mm exatos.</li>
-          <li><strong>Texto legível</strong> — número do RG e data de nascimento visíveis.</li>
-          <li><strong>Foto com cores naturais</strong> — sem desbotamento.</li>
-          <li><strong>Sem cortes</strong> — todos os cantos do documento visíveis.</li>
-          <li><strong>Alinhamento correto</strong> — sem inclinação na folha.</li>
+          <li><strong>Meça com régua</strong> — o documento deve ter exatamente 85,6 mm × 54 mm</li>
+          <li><strong>Texto legível</strong> — número e data de nascimento visíveis sem esforço</li>
+          <li><strong>Foto com cores naturais</strong> — sem desbotamento ou tons errados</li>
+          <li><strong>Sem cortes</strong> — todos os quatro cantos do documento aparecem</li>
+          <li><strong>Sem inclinação</strong> — documento reto na folha</li>
         </ul>
       </div>
-      <div class="tip warn" style="margin-top:0">
+      <div class="tip warn">
         <span class="tip-icon">⚠️</span>
-        <span>Se o RG impresso ficou menor que o original, o redimensionamento está ativo. Volte ao passo 3 e use <strong>"Tamanho real" / 100%</strong>.</span>
+        <span>Saiu menor que o original físico? O computador reduziu a imagem. Volte ao passo 3 e escolha <strong>Tamanho real / 100%</strong>.</span>
+      </div>
+      <div class="tip ok">
+        <span class="tip-icon">✅</span>
+        <span>Ficou com bordas brancas ao redor do documento? <strong>Isso é normal e está certo.</strong> O que importa é o tamanho do documento, não das bordas.</span>
       </div>
     </section>
 
-    <!-- 6. Problemas -->
+    <!-- 6. Algo saiu errado? -->
     <section class="section">
-      <h2><span class="sn">6</span> Problemas comuns</h2>
+      <h2><span class="sn">6</span> Algo saiu errado?</h2>
       <div class="card">
-        <table class="prob-table">
-          <thead>
-            <tr>
-              <th>Problema</th>
-              <th class="col-causa">Causa</th>
-              <th>Solução</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>RG impresso menor</td>
-              <td class="col-causa">"Ajustar ao papel" ativo</td>
-              <td>Use "Tamanho real" / 100% no software.</td>
-            </tr>
-            <tr>
-              <td>Margens brancas largas</td>
-              <td class="col-causa">Normal — impressora não imprime até a borda</td>
-              <td>Isso é correto. O que importa é a escala do RG, não a margem.</td>
-            </tr>
-            <tr>
-              <td>Cores desbotadas</td>
-              <td class="col-causa">Qualidade em "Rascunho" ou tinta baixa</td>
-              <td>Defina qualidade como Normal ou Alta.</td>
-            </tr>
-            <tr>
-              <td>RG cortado</td>
-              <td class="col-causa">Papel errado (ex: Carta ao invés de A4)</td>
-              <td>Confirme A4 no software e nas propriedades da impressora.</td>
-            </tr>
-            <tr>
-              <td>Impressão inclinada</td>
-              <td class="col-causa">Orientação Paisagem ao invés de Retrato</td>
-              <td>Defina orientação como Retrato em todos os painéis.</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="prob-list">
+          <div class="prob-item">
+            <div class="prob-q">O documento ficou menor que o original</div>
+            <div class="prob-a">A opção "Ajustar ao papel" estava ativa. Volte ao passo 3, escolha <strong>Tamanho real / 100%</strong> e reimprima.</div>
+          </div>
+          <div class="prob-item">
+            <div class="prob-q">As cores saíram fracas ou desbotadas</div>
+            <div class="prob-a">A qualidade estava em modo Rascunho, ou a tinta está baixa. Mude a qualidade para Normal ou Alta e verifique o nível de tinta.</div>
+          </div>
+          <div class="prob-item">
+            <div class="prob-q">O documento foi cortado na folha</div>
+            <div class="prob-a">O papel configurado provavelmente não é A4. Verifique nas propriedades da impressora e no software que o tamanho está em A4.</div>
+          </div>
+          <div class="prob-item">
+            <div class="prob-q">O documento saiu na diagonal (inclinado)</div>
+            <div class="prob-a">A orientação estava como Paisagem. Mude para <strong>Retrato</strong> no software e nas propriedades da impressora.</div>
+          </div>
+          <div class="prob-item">
+            <div class="prob-q">Ficou com muita borda branca ao redor</div>
+            <div class="prob-a">Isso é normal — a impressora física não imprime até a borda do papel. O que importa é medir o documento: deve ter 85,6 mm × 54 mm.</div>
+          </div>
+        </div>
       </div>
     </section>
 
