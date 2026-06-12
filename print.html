@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Imprimir RG · Guia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #0f1117;
+      --surface:  #181c27;
+      --border:   #252a38;
+      --accent:   #4f8ef7;
+      --accent2:  #7c5cfc;
+      --warn:     #f5a623;
+      --ok:       #3ecf6e;
+      --text:     #e4e8f0;
+      --muted:    #8893a8;
+      --danger:   #f75f5f;
+      --mono:     'JetBrains Mono', monospace;
+      --sans:     'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #auth-block {
+      position: fixed; inset: 0; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999; flex-direction: column; gap: 14px;
+      font-size: 14px; color: var(--muted); padding: 24px; text-align: center;
+    }
+    #auth-block.hidden { display: none; }
+
+    .page-wrap {
+      max-width: 780px; margin: 0 auto; padding: 0 16px 80px;
+    }
+    @media (min-width: 600px) { .page-wrap { padding: 0 24px 80px; } }
+
+    .topnav {
+      padding: 16px 0 0; margin-bottom: 28px;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      text-decoration: none; transition: color .15s; padding: 6px 0;
+    }
+    .back-btn:active, .back-btn:hover { color: var(--accent); }
+    .breadcrumb {
+      font-size: 11px; color: var(--muted); font-family: var(--mono);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;
+    }
+    @media (min-width: 480px) { .breadcrumb { max-width: unset; font-size: 12px; } }
+    .breadcrumb span { color: var(--border); margin: 0 4px; }
+
+    header {
+      padding: 0 0 28px; border-bottom: 1px solid var(--border); margin-bottom: 36px;
+    }
+    .eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+    }
+    h1 {
+      font-size: clamp(22px, 5.5vw, 32px); font-weight: 700;
+      line-height: 1.2; letter-spacing: -.02em; color: #fff; margin-bottom: 10px;
+    }
+    .subtitle { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    .section { margin-bottom: 44px; }
+    h2 {
+      font-size: 17px; font-weight: 700; color: #fff; letter-spacing: -.01em;
+      margin: 0 0 16px; display: flex; align-items: center; gap: 10px;
+    }
+    h2 .sn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; border-radius: 6px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      font-size: 12px; font-weight: 700; color: #fff;
+    }
+    h3 {
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin: 0 0 12px;
+    }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 16px; margin-bottom: 10px;
+    }
+    @media (min-width: 480px) { .card { padding: 22px 20px; } }
+
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+    .step { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; color: var(--muted); flex-shrink: 0; margin-top: 1px;
+    }
+    .step-body strong { color: #fff; font-weight: 600; font-size: 14px; line-height: 1.4; }
+    .step-body p { color: var(--muted); margin-top: 4px; font-size: 13.5px; line-height: 1.55; }
+
+    /* ── OS tabs ── */
+    .tabs-wrap {
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      margin-bottom: 16px; scrollbar-width: none;
+    }
+    .tabs-wrap::-webkit-scrollbar { display: none; }
+    .tabs { display: flex; gap: 8px; width: max-content; padding-bottom: 2px; }
+    .tab {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600;
+      color: var(--muted); cursor: pointer; transition: all .15s; font-family: var(--sans);
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .tab:active, .tab:hover { border-color: var(--accent); color: var(--accent); }
+    .tab.active { border-color: var(--accent); background: rgba(79,142,247,.12); color: var(--accent); }
+    .os-content { display: none; }
+    .os-content.active { display: block; }
+
+    /* ── Tips ── */
+    .tip {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 13px; color: var(--muted);
+      padding: 13px 14px; border-radius: 8px; margin-top: 10px; line-height: 1.55;
+    }
+    .tip.info  { background: rgba(79,142,247,.08); border: 1px solid rgba(79,142,247,.2); }
+    .tip.warn  { background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.25); color: #d4a04e; }
+    .tip.ok    { background: rgba(62,207,110,.07); border: 1px solid rgba(62,207,110,.2); color: #58c47b; }
+    .tip-icon  { font-size: 15px; flex-shrink: 0; line-height: 1.55; }
+
+    /* ── Setting list — stacks on mobile ── */
+    .setting-list { display: flex; flex-direction: column; }
+    .setting-row {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(37,42,56,.7);
+    }
+    .setting-row:last-child { border-bottom: none; }
+    @media (min-width: 480px) {
+      .setting-row {
+        flex-direction: row;
+        gap: 12px;
+        align-items: flex-start;
+      }
+    }
+    .setting-key {
+      font-size: 12px; color: var(--muted); flex-shrink: 0;
+    }
+    @media (min-width: 480px) {
+      .setting-key { width: 160px; padding-top: 1px; font-size: 13px; }
+    }
+    .setting-val { font-size: 13.5px; color: var(--text); }
+    .setting-val strong { color: #fff; }
+    .setting-val .tag {
+      display: inline-block; font-size: 10px; font-weight: 600;
+      padding: 1px 6px; border-radius: 4px; margin-left: 6px;
+      vertical-align: middle; font-family: var(--mono);
+    }
+    .tag-ok  { background: rgba(62,207,110,.12); border: 1px solid rgba(62,207,110,.25); color: var(--ok); }
+    .tag-bad { background: rgba(247,95,95,.1); border: 1px solid rgba(247,95,95,.25); color: var(--danger); }
+
+    /* ── Checklist ── */
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .checklist li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13.5px; color: var(--muted); line-height: 1.55;
+    }
+    .checklist li::before { content: '✓'; color: var(--ok); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .checklist li strong { color: var(--text); }
+
+    /* ── Problems table ── */
+    .prob-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .prob-table th {
+      text-align: left; font-size: 10px; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+      padding: 8px 12px; border-bottom: 1px solid var(--border);
+    }
+    .prob-table td {
+      padding: 10px 12px; border-bottom: 1px solid rgba(37,42,56,.7);
+      color: var(--muted); vertical-align: top;
+    }
+    .prob-table tr:last-child td { border-bottom: none; }
+    .prob-table td:first-child { color: var(--text); font-weight: 500; }
+    .prob-table .col-causa { display: none; }
+    @media (min-width: 560px) { .prob-table .col-causa { display: table-cell; } }
+
+    code {
+      font-family: var(--mono); font-size: 12px; background: rgba(255,255,255,.06);
+      border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; color: #c5d0e6;
+      word-break: break-all;
+    }
+
+    .page-nav {
+      margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    }
+    .nav-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none;
+      padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 9px;
+      transition: all .15s; flex: 1; justify-content: center;
+    }
+    .nav-link:active, .nav-link:hover {
+      color: var(--accent); border-color: var(--accent); background: rgba(79,142,247,.06);
+    }
+    @media (min-width: 480px) {
+      .nav-link { flex: unset; justify-content: flex-start; }
+      .nav-link.next { margin-left: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="auth-block">
+    <div style="font-size:28px">🔒</div>
+    <div>Sessão expirada.</div>
+    <a href="index.html" style="color:var(--accent); font-weight:600">Voltar ao início →</a>
+  </div>
+
+  <div class="page-wrap">
+
+    <nav class="topnav">
+      <a class="back-btn" href="index.html">← Início</a>
+      <span class="breadcrumb">rg.lucafchala.com <span>/</span> print</span>
+    </nav>
+
+    <header>
+      <div class="eyebrow">Guia 02 · Impressão</div>
+      <h1>Como imprimir o RG corretamente</h1>
+      <p class="subtitle">Imprima o PDF em escala 100%, sem redimensionamento — o RG sai no tamanho real do documento físico.</p>
+    </header>
+
+    <!-- 1. Conceito -->
+    <section class="section">
+      <h2><span class="sn">1</span> O que significa "sem bordas"</h2>
+      <div class="card">
+        <p style="color:var(--muted); font-size:14px; margin-bottom:14px; line-height:1.6">
+          Não significa imprimir até a borda física do papel. Significa <strong style="color:var(--text)">não deixar o software encolher a imagem</strong> para encaixá-la nas margens da impressora.
+        </p>
+        <div class="setting-list">
+          <div class="setting-row">
+            <span class="setting-key">Correto</span>
+            <span class="setting-val"><strong>Tamanho real / 100%</strong> — imagem no tamanho original do PDF <span class="tag tag-ok">USE</span></span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-key">Errado</span>
+            <span class="setting-val"><strong>Ajustar ao papel / Fit to page</strong> — software encolhe a imagem <span class="tag tag-bad">EVITE</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="tip ok">
+        <span class="tip-icon">📏</span>
+        <span><strong>Como verificar:</strong> meça o RG impresso. Deve ter exatamente <strong>85,6 mm × 54 mm</strong> — igual ao original físico.</span>
+      </div>
+    </section>
+
+    <!-- 2. Antes de imprimir -->
+    <section class="section">
+      <h2><span class="sn">2</span> Antes de imprimir</h2>
+      <div class="card">
+        <ul class="checklist">
+          <li><strong>Papel A4</strong> — 75 g/m² ou superior</li>
+          <li><strong>Tinta/toner suficiente</strong> — tinta baixa desbota cores e marcas de segurança</li>
+          <li><strong>PDF em mãos</strong> — <code>rg-frente.pdf</code> e <code>rg-verso.pdf</code></li>
+          <li><strong>Adobe Acrobat Reader</strong> — mais confiável para controle de escala. Evite imprimir direto do navegador.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. Por sistema operacional -->
+    <section class="section">
+      <h2><span class="sn">3</span> Passo a passo por sistema</h2>
+      <div class="tabs-wrap">
+        <div class="tabs">
+          <button class="tab active" onclick="showOS('adobe', event)">Windows — Adobe Reader</button>
+          <button class="tab" onclick="showOS('edge', event)">Windows — Edge / Foxit</button>
+          <button class="tab" onclick="showOS('mac', event)">macOS — Preview</button>
+        </div>
+      </div>
+
+      <!-- Adobe Reader -->
+      <div class="os-content active" id="os-adobe">
+        <div class="card">
+          <h3>Adobe Acrobat Reader — recomendado</h3>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Abra o PDF no Adobe Reader</strong><p>Clique com o botão direito no arquivo → <em>Abrir com → Adobe Acrobat Reader</em>.</p></div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Ctrl+P</strong><p>Abre o diálogo de impressão.</p></div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Seção "Tamanho e tratamento de páginas"</strong><p>Clique em <strong>"Tamanho"</strong>.</p></div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Marque "Tamanho real"</strong><p>O campo de escala deve mostrar <strong>100%</strong>. Não use <em>Ajustar</em>, <em>Reduzir</em> ou <em>Ampliar</em>.</p></div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Papel: A4, Orientação: Retrato</strong></div></div>
+            <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Propriedades da impressora</strong><p>Clique em <em>Propriedades</em> → Papel: <em>A4</em> → Layout: <em>Retrato, 1 página por folha</em>. Ative <em>Impressão sem margens</em> se disponível.</p></div></div>
+            <div class="step"><div class="step-num">7</div><div class="step-body"><strong>Imprima</strong><p>Repita para o verso se tiver dois arquivos separados.</p></div></div>
+          </div>
+          <div class="tip info">
+            <span class="tip-icon">ℹ️</span>
+            <span>O Adobe Reader mostra uma pré-visualização ao vivo. Confirme que o RG aparece centralizado na página, sem estar colado nas bordas.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edge / Foxit -->
+      <div class="os-content" id="os-edge">
+        <div class="card">
+          <h3>Microsoft Edge / Foxit PDF Reader</h3>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Abra o PDF</strong><p>Duplo clique ou arraste para a janela do programa.</p></div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Ctrl+P</strong></div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Escala: "Tamanho real" ou "100%"</strong><p>Desmarque <em>"Ajustar ao papel"</em> se estiver marcado.</p></div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Papel: A4, Retrato</strong></div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Mais configurações → Opções da impressora</strong><p>Papel: A4, margens mínimas ou sem margens se disponível.</p></div></div>
+            <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Imprima</strong></div></div>
+          </div>
+          <div class="tip warn">
+            <span class="tip-icon">⚠️</span>
+            <span>O <strong>Edge</strong> frequentemente força "Ajustar ao papel" por padrão. Se não encontrar a opção 100%, use o <strong>Adobe Reader</strong>.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- macOS -->
+      <div class="os-content" id="os-mac">
+        <div class="card">
+          <h3>macOS — Preview</h3>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Abra o PDF no Preview</strong><p>Duplo clique no arquivo.</p></div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Cmd+P</strong></div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Tamanho do papel: A4</strong></div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Escala: 100%</strong><p>Desmarque <em>"Escalar para ajustar"</em> se aparecer.</p></div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Orientação: Retrato</strong></div></div>
+            <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Menu suspenso da impressora → Layout</strong><p>1 página por folha. Se disponível: ative <em>Impressão sem bordas</em>.</p></div></div>
+            <div class="step"><div class="step-num">7</div><div class="step-body"><strong>Imprima</strong></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Configurações da impressora -->
+    <section class="section">
+      <h2><span class="sn">4</span> Configurações da impressora</h2>
+      <p style="color:var(--muted); margin-bottom:16px; font-size:14px; line-height:1.6">
+        Além do software de leitura, verifique nas <strong style="color:var(--text)">Propriedades da impressora</strong>:
+      </p>
+      <div class="card">
+        <div class="setting-list">
+          <div class="setting-row">
+            <span class="setting-key">Tamanho do papel</span>
+            <span class="setting-val"><strong>A4</strong> — nunca deixe em "automático"</span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-key">Orientação</span>
+            <span class="setting-val"><strong>Retrato (Portrait)</strong></span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-key">Páginas por folha</span>
+            <span class="setting-val"><strong>1</strong></span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-key">Qualidade</span>
+            <span class="setting-val"><strong>Normal</strong> ou <strong>Alta</strong> — nunca Rascunho</span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-key">Escala / Zoom</span>
+            <span class="setting-val"><strong>100%</strong></span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-key">Sem bordas</span>
+            <span class="setting-val"><strong>Ative se disponível</strong> — elimina redução automática de margem</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Verificação final -->
+    <section class="section">
+      <h2><span class="sn">5</span> Verificação final</h2>
+      <div class="card">
+        <ul class="checklist">
+          <li><strong>Meça com régua</strong> — 85,6 mm × 54 mm exatos.</li>
+          <li><strong>Texto legível</strong> — número do RG e data de nascimento visíveis.</li>
+          <li><strong>Foto com cores naturais</strong> — sem desbotamento.</li>
+          <li><strong>Sem cortes</strong> — todos os cantos do documento visíveis.</li>
+          <li><strong>Alinhamento correto</strong> — sem inclinação na folha.</li>
+        </ul>
+      </div>
+      <div class="tip warn" style="margin-top:0">
+        <span class="tip-icon">⚠️</span>
+        <span>Se o RG impresso ficou menor que o original, o redimensionamento está ativo. Volte ao passo 3 e use <strong>"Tamanho real" / 100%</strong>.</span>
+      </div>
+    </section>
+
+    <!-- 6. Problemas -->
+    <section class="section">
+      <h2><span class="sn">6</span> Problemas comuns</h2>
+      <div class="card">
+        <table class="prob-table">
+          <thead>
+            <tr>
+              <th>Problema</th>
+              <th class="col-causa">Causa</th>
+              <th>Solução</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>RG impresso menor</td>
+              <td class="col-causa">"Ajustar ao papel" ativo</td>
+              <td>Use "Tamanho real" / 100% no software.</td>
+            </tr>
+            <tr>
+              <td>Margens brancas largas</td>
+              <td class="col-causa">Normal — impressora não imprime até a borda</td>
+              <td>Isso é correto. O que importa é a escala do RG, não a margem.</td>
+            </tr>
+            <tr>
+              <td>Cores desbotadas</td>
+              <td class="col-causa">Qualidade em "Rascunho" ou tinta baixa</td>
+              <td>Defina qualidade como Normal ou Alta.</td>
+            </tr>
+            <tr>
+              <td>RG cortado</td>
+              <td class="col-causa">Papel errado (ex: Carta ao invés de A4)</td>
+              <td>Confirme A4 no software e nas propriedades da impressora.</td>
+            </tr>
+            <tr>
+              <td>Impressão inclinada</td>
+              <td class="col-causa">Orientação Paisagem ao invés de Retrato</td>
+              <td>Defina orientação como Retrato em todos os painéis.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="page-nav">
+      <a class="nav-link" href="scan.html">← Escanear</a>
+      <a class="nav-link next" href="index.html">Início →</a>
+    </div>
+
+  </div>
+
+  <script>
+    if (sessionStorage.getItem('rg_auth') !== '1') {
+      document.getElementById('auth-block').classList.remove('hidden');
+    } else {
+      document.getElementById('auth-block').classList.add('hidden');
+    }
+
+    function showOS(os, event) {
+      document.querySelectorAll('.os-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      document.getElementById('os-' + os).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+  </script>
+</body>
+</html>

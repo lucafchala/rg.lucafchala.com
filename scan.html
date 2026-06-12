@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escanear RG · Guia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #0f1117;
+      --surface:  #181c27;
+      --border:   #252a38;
+      --accent:   #4f8ef7;
+      --accent2:  #7c5cfc;
+      --warn:     #f5a623;
+      --ok:       #3ecf6e;
+      --text:     #e4e8f0;
+      --muted:    #8893a8;
+      --danger:   #f75f5f;
+      --mono:     'JetBrains Mono', monospace;
+      --sans:     'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Auth guard ── */
+    #auth-block {
+      position: fixed; inset: 0; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999; flex-direction: column; gap: 14px;
+      font-size: 14px; color: var(--muted); padding: 24px; text-align: center;
+    }
+    #auth-block.hidden { display: none; }
+
+    /* ── Layout ── */
+    .page-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 16px 80px;
+    }
+    @media (min-width: 600px) { .page-wrap { padding: 0 24px 80px; } }
+
+    /* ── Top nav ── */
+    .topnav {
+      padding: 16px 0 0;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      text-decoration: none; transition: color .15s;
+      padding: 6px 0; /* tap area */
+    }
+    .back-btn:active, .back-btn:hover { color: var(--accent); }
+    .breadcrumb {
+      font-size: 11px; color: var(--muted); font-family: var(--mono);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: 160px;
+    }
+    @media (min-width: 480px) { .breadcrumb { max-width: unset; font-size: 12px; } }
+    .breadcrumb span { color: var(--border); margin: 0 4px; }
+
+    /* ── Header ── */
+    header {
+      padding: 0 0 28px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 36px;
+    }
+    .eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+    }
+    h1 {
+      font-size: clamp(22px, 5.5vw, 32px); font-weight: 700;
+      line-height: 1.2; letter-spacing: -.02em; color: #fff; margin-bottom: 10px;
+    }
+    .subtitle { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    /* ── Sections ── */
+    .section { margin-bottom: 44px; }
+    h2 {
+      font-size: 17px; font-weight: 700; color: #fff; letter-spacing: -.01em;
+      margin: 0 0 16px; display: flex; align-items: center; gap: 10px;
+    }
+    h2 .sn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; border-radius: 6px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      font-size: 12px; font-weight: 700; color: #fff;
+    }
+    h3 {
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin: 0 0 12px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 16px; margin-bottom: 10px;
+    }
+    @media (min-width: 480px) { .card { padding: 22px 20px; } }
+
+    /* ── Steps ── */
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+    .step { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; color: var(--muted);
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .step-body strong { color: #fff; font-weight: 600; font-size: 14px; line-height: 1.4; }
+    .step-body p { color: var(--muted); margin-top: 4px; font-size: 13.5px; line-height: 1.55; }
+
+    /* ── Brand tabs — horizontal scroll on mobile ── */
+    .tabs-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 16px;
+      /* hide scrollbar visually */
+      scrollbar-width: none;
+    }
+    .tabs-wrap::-webkit-scrollbar { display: none; }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      width: max-content; /* prevent wrapping, enable scroll */
+      padding-bottom: 2px; /* room for focus ring */
+    }
+    .tab {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600;
+      color: var(--muted); cursor: pointer; transition: all .15s; font-family: var(--sans);
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .tab:active, .tab:hover { border-color: var(--accent); color: var(--accent); }
+    .tab.active { border-color: var(--accent); background: rgba(79,142,247,.12); color: var(--accent); }
+    .brand-content { display: none; }
+    .brand-content.active { display: block; }
+
+    /* ── Tips ── */
+    .tip {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 13px; color: var(--muted);
+      padding: 13px 14px; border-radius: 8px; margin-top: 10px;
+      line-height: 1.55;
+    }
+    .tip.info  { background: rgba(79,142,247,.08); border: 1px solid rgba(79,142,247,.2); }
+    .tip.warn  { background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.25); color: #d4a04e; }
+    .tip.ok    { background: rgba(62,207,110,.07); border: 1px solid rgba(62,207,110,.2); color: #58c47b; }
+    .tip-icon  { font-size: 15px; flex-shrink: 0; line-height: 1.55; }
+
+    /* ── Spec table — responsive stacked on small screens ── */
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 8px;
+    }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 420px; }
+    .spec-table th {
+      text-align: left; font-size: 10px; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+      padding: 8px 12px; border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .spec-table td {
+      padding: 10px 12px; border-bottom: 1px solid rgba(37,42,56,.7);
+      color: var(--text); vertical-align: top;
+    }
+    .spec-table tr:last-child td { border-bottom: none; }
+    .spec-table td:first-child { color: var(--muted); white-space: nowrap; }
+    .val { color: #fff; font-weight: 500; }
+
+    /* ── Problems table — 2-col on mobile (hide "Causa") ── */
+    .prob-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .prob-table th {
+      text-align: left; font-size: 10px; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+      padding: 8px 12px; border-bottom: 1px solid var(--border);
+    }
+    .prob-table td {
+      padding: 10px 12px; border-bottom: 1px solid rgba(37,42,56,.7);
+      color: var(--muted); font-size: 13px; vertical-align: top;
+    }
+    .prob-table tr:last-child td { border-bottom: none; }
+    .prob-table td:first-child { color: var(--text); font-weight: 500; }
+    .prob-table .col-causa { display: none; }
+    @media (min-width: 560px) { .prob-table .col-causa { display: table-cell; } }
+
+    /* ── Checklist ── */
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .checklist li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13.5px; color: var(--muted); line-height: 1.55;
+    }
+    .checklist li::before {
+      content: '✓'; color: var(--ok); font-weight: 700; flex-shrink: 0; margin-top: 1px;
+    }
+    .checklist li strong { color: var(--text); }
+
+    code {
+      font-family: var(--mono); font-size: 12px;
+      background: rgba(255,255,255,.06); border: 1px solid var(--border);
+      border-radius: 4px; padding: 1px 6px; color: #c5d0e6;
+      word-break: break-all;
+    }
+
+    /* ── Page nav ── */
+    .page-nav {
+      margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 10px;
+    }
+    .nav-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none;
+      padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 9px;
+      transition: all .15s; flex: 1; justify-content: center;
+    }
+    .nav-link:active, .nav-link:hover {
+      color: var(--accent); border-color: var(--accent); background: rgba(79,142,247,.06);
+    }
+    @media (min-width: 480px) {
+      .nav-link { flex: unset; justify-content: flex-start; }
+      .nav-link.next { margin-left: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="auth-block">
+    <div style="font-size:28px">🔒</div>
+    <div>Sessão expirada.</div>
+    <a href="index.html" style="color:var(--accent); font-weight:600">Voltar ao início →</a>
+  </div>
+
+  <div class="page-wrap">
+
+    <nav class="topnav">
+      <a class="back-btn" href="index.html">← Início</a>
+      <span class="breadcrumb">rg.lucafchala.com <span>/</span> scan</span>
+    </nav>
+
+    <header>
+      <div class="eyebrow">Guia 01 · Digitalização</div>
+      <h1>Como escanear o RG</h1>
+      <p class="subtitle">Gere um PDF em tamanho A4, colorido, com as duas faces do documento — pronto para envio ou impressão.</p>
+    </header>
+
+    <!-- 1. Antes de começar -->
+    <section class="section">
+      <h2><span class="sn">1</span> Antes de começar</h2>
+      <div class="card">
+        <ul class="checklist">
+          <li><strong>RG físico</strong> — nas duas faces (frente e verso)</li>
+          <li><strong>Scanner de mesa</strong> (flatbed) — não use o ADF (alimentador automático)</li>
+          <li><strong>Software de digitalização</strong> — veja seção 3</li>
+          <li><strong>Vidro do scanner limpo</strong> — passe um pano de microfibra seco antes</li>
+        </ul>
+      </div>
+      <div class="tip warn" style="margin-top:0">
+        <span class="tip-icon">⚠️</span>
+        <span><strong>Atenção legal:</strong> cópias do RG são permitidas apenas para uso pessoal ou quando exigidas por terceiros (banco, empresa etc.).</span>
+      </div>
+    </section>
+
+    <!-- 2. Configurações -->
+    <section class="section">
+      <h2><span class="sn">2</span> Configurações de digitalização</h2>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="spec-table">
+            <thead>
+              <tr><th>Parâmetro</th><th>Valor</th><th>Por quê</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Resolução</td>
+                <td><span class="val">300 DPI</span></td>
+                <td style="color:var(--muted)">Suficiente para texto e foto. 600 DPI gera arquivo desnecessariamente grande.</td>
+              </tr>
+              <tr>
+                <td>Modo de cor</td>
+                <td><span class="val">Colorido</span></td>
+                <td style="color:var(--muted)">Preserva marcas de segurança e foto original.</td>
+              </tr>
+              <tr>
+                <td>Formato</td>
+                <td><span class="val">PDF</span></td>
+                <td style="color:var(--muted)">Fixa o tamanho de página. Evite JPEG/PNG.</td>
+              </tr>
+              <tr>
+                <td>Tamanho</td>
+                <td><span class="val">A4 (210×297 mm)</span></td>
+                <td style="color:var(--muted)">Não use "tamanho do documento" ou "automático".</td>
+              </tr>
+              <tr>
+                <td>Orientação</td>
+                <td><span class="val">Retrato</span></td>
+                <td style="color:var(--muted)">—</td>
+              </tr>
+              <tr>
+                <td>Compressão PDF</td>
+                <td><span class="val">Baixa / Nenhuma</span></td>
+                <td style="color:var(--muted)">Preserva nitidez para texto fino.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tip info">
+        <span class="tip-icon">ℹ️</span>
+        <span>O RG brasileiro mede <strong>85,6 × 54 mm</strong>. Escaneado em A4, aparece centralizado no tamanho real com espaço branco ao redor — isso é correto.</span>
+      </div>
+    </section>
+
+    <!-- 3. Por marca -->
+    <section class="section">
+      <h2><span class="sn">3</span> Passo a passo por marca</h2>
+      <div class="tabs-wrap">
+        <div class="tabs">
+          <button class="tab active" onclick="showBrand('epson', event)">Epson</button>
+          <button class="tab" onclick="showBrand('hp', event)">HP</button>
+          <button class="tab" onclick="showBrand('canon', event)">Canon</button>
+          <button class="tab" onclick="showBrand('brother', event)">Brother</button>
+          <button class="tab" onclick="showBrand('samsung', event)">Samsung / Xerox</button>
+        </div>
+      </div>
+
+      <!-- EPSON -->
+      <div class="brand-content active" id="brand-epson">
+        <div class="card">
+          <h3>Epson Scan 2 / Smart Panel</h3>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Abra o vidro do scanner</strong><p>Coloque o RG com a face para baixo, encostado no canto marcado com seta (canto superior esquerdo).</p></div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Abra o Epson Scan 2</strong><p>Menu Iniciar → Epson → <em>Epson Scan 2</em>. Ou use o <em>Epson Smart Panel</em>.</p></div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Modo Profissional</strong><p>Canto superior direito: selecione <em>Modo Profissional</em> ou <em>Modo Avançado</em>.</p></div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Configure os parâmetros</strong><p>Tipo de documento: <em>Reflexão</em> → Fonte: <em>Vidro do scanner</em> → Imagem: <em>Cor</em> → Resolução: <em>300 dpi</em> → Tamanho: <em>A4</em>.</p></div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Pré-visualize</strong><p>Confirme que o RG aparece completo. <strong>Não use recorte automático.</strong></p></div></div>
+            <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Formato de saída: PDF</strong><p>Em <em>Configurações de imagem</em> → <em>PDF</em>. Desmarque "Compactar PDF" se disponível.</p></div></div>
+            <div class="step"><div class="step-num">7</div><div class="step-body"><strong>Digitalize a frente</strong><p>Clique em <em>Digitalizar</em>. Salve como <code>rg-frente.pdf</code>.</p></div></div>
+            <div class="step"><div class="step-num">8</div><div class="step-body"><strong>Vire o RG e repita</strong><p>Posicione o verso e repita os passos 4–7. Salve como <code>rg-verso.pdf</code>.</p></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HP -->
+      <div class="brand-content" id="brand-hp">
+        <div class="card">
+          <h3>HP Smart / HP Scan</h3>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Posicione o RG no vidro</strong><p>Face para baixo, alinhado ao canto com seta ou triângulo.</p></div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Abra o HP Smart</strong><p>Menu Iniciar → <em>HP Smart</em> → selecione a impressora → <em>Digitalizar</em>.</p></div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Escolha "Scanner"</strong><p>Selecione <em>Scanner</em> (não <em>Câmera do documento</em>).</p></div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Configure</strong><p>Tipo: <em>Documento</em> → Cor → Resolução: <em>300 ppp</em> → Tamanho: <em>A4</em> → Salvar como: <em>PDF</em>.</p></div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Desative o recorte automático</strong><p>Se houver <em>"Cortar automaticamente"</em>, desmarque para preservar o A4 completo.</p></div></div>
+            <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Digitalize frente e verso</strong><p>Salve <code>rg-frente.pdf</code> e <code>rg-verso.pdf</code> separadamente.</p></div></div>
+          </div>
+          <div class="tip info">
+            <span class="tip-icon">ℹ️</span>
+            <span>No <strong>HP Scan</strong> (desktop clássico): <em>Ferramentas → Configurações de digitalização</em> para fixar o tamanho em A4.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CANON -->
+      <div class="brand-content" id="brand-canon">
+        <div class="card">
+          <h3>Canon IJ Scan Utility / ScanGear</h3>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Coloque o RG no vidro</strong><p>Face para baixo, canto superior esquerdo alinhado à marca.</p></div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Abra o IJ Scan Utility</strong><p>Menu Iniciar → Canon Utilities → <em>IJ Scan Utility</em>.</p></div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Acesse as configurações</strong><p>Ícone de engrenagem → <em>Digitalização de documento</em>.</p></div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Ajuste os parâmetros</strong><p>Origem: <em>Plataforma</em> → Cor: <em>Colorido</em> → Tamanho: <em>A4</em> → Resolução: <em>300 dpi</em> → Formato: <em>PDF</em>.</p></div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Desative compressão e clique em "Documento"</strong><p>O scan inicia. Repita para o verso.</p></div></div>
+          </div>
+          <div class="tip info">
+            <span class="tip-icon">ℹ️</span>
+            <span>Pelo <strong>ScanGear</strong>: acesso via IJ Scan Utility → Abrir ScanGear. Defina tamanho de saída como A4.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BROTHER -->
+      <div class="brand-content" id="brand-brother">
+        <div class="card">
+          <h3>Brother ControlCenter4 / iPrint&amp;Scan</h3>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Coloque o RG no vidro</strong><p>Face para baixo, canto superior esquerdo alinhado à linha de referência.</p></div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Abra o ControlCenter4</strong><p>Menu Iniciar → Brother → <em>ControlCenter4</em> → <em>Modo Avançado</em>.</p></div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Aba Digitalização → Arquivo → Configurações</strong><p>Tipo: <em>PDF</em> → Qualidade: <em>Alta</em> → Resolução: <em>300 dpi</em> → Cor 24 bits → Tamanho: <em>A4</em>.</p></div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Desative recorte automático</strong><p>Em <em>Configurações avançadas</em>, desmarque <em>"Recorte automático"</em> ou <em>"Detecção automática de borda"</em>.</p></div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Digitalize e salve frente e verso</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SAMSUNG / XEROX -->
+      <div class="brand-content" id="brand-samsung">
+        <div class="card">
+          <h3>Samsung Easy Document Creator / Xerox</h3>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Coloque o RG no vidro</strong><p>Face para baixo, alinhado ao canto marcado.</p></div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Abra o Samsung Easy Document Creator</strong><p>Menu Iniciar → Samsung Printers → <em>Easy Document Creator</em>.</p></div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Digitalização básica → Configurações</strong><p>Tipo: <em>Cor</em> → Resolução: <em>300 dpi</em> → Tamanho: <em>A4</em> → Formato: <em>PDF único</em>.</p></div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Digitalize frente e verso</strong></div></div>
+          </div>
+          <div class="tip info">
+            <span class="tip-icon">ℹ️</span>
+            <span><strong>Xerox:</strong> painel frontal → <em>Digitalizar → Digitalizar para PC → Configurações → 300 dpi, Cor, A4, PDF</em>.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Conferir o PDF -->
+    <section class="section">
+      <h2><span class="sn">4</span> Conferir o PDF gerado</h2>
+      <div class="card">
+        <ul class="checklist">
+          <li><strong>Tamanho A4</strong> — Adobe Reader: Ctrl+D → confirme 210 × 297 mm.</li>
+          <li><strong>RG sem cortes</strong> — completo, com espaço branco ao redor.</li>
+          <li><strong>Texto legível a 100%</strong> — se borrado, re-digitalize a 600 dpi.</li>
+          <li><strong>Foto com cores naturais</strong> — sem esverdeado ou saturação excessiva.</li>
+          <li><strong>Dois arquivos</strong> — <code>rg-frente.pdf</code> e <code>rg-verso.pdf</code>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 5. Problemas comuns -->
+    <section class="section">
+      <h2><span class="sn">5</span> Problemas comuns</h2>
+      <div class="card">
+        <table class="prob-table">
+          <thead>
+            <tr>
+              <th>Problema</th>
+              <th class="col-causa">Causa</th>
+              <th>Solução</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>RG cortado no PDF</td>
+              <td class="col-causa">Recorte automático ativado</td>
+              <td>Desative "Detecção de borda" e force tamanho A4.</td>
+            </tr>
+            <tr>
+              <td>Texto borrado</td>
+              <td class="col-causa">DPI baixo ou vidro sujo</td>
+              <td>Re-digitalize a 300 dpi. Limpe o vidro com microfibra.</td>
+            </tr>
+            <tr>
+              <td>PDF muito grande (&gt;5 MB)</td>
+              <td class="col-causa">600 dpi ou sem compressão</td>
+              <td>Use 300 dpi. Adobe Reader: Arquivo → Reduzir tamanho.</td>
+            </tr>
+            <tr>
+              <td>Foto esverdeada</td>
+              <td class="col-causa">Vidro sujo ou luz ambiente</td>
+              <td>Limpe o vidro. Feche a tampa completamente.</td>
+            </tr>
+            <tr>
+              <td>RG inclinado</td>
+              <td class="col-causa">Posicionamento incorreto</td>
+              <td>Encoste na marca de referência antes de escanear.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="page-nav">
+      <a class="nav-link" href="index.html">← Início</a>
+      <a class="nav-link next" href="print.html">Imprimir →</a>
+    </div>
+
+  </div>
+
+  <script>
+    if (sessionStorage.getItem('rg_auth') !== '1') {
+      document.getElementById('auth-block').classList.remove('hidden');
+    } else {
+      document.getElementById('auth-block').classList.add('hidden');
+    }
+
+    function showBrand(brand, event) {
+      document.querySelectorAll('.brand-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      document.getElementById('brand-' + brand).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+  </script>
+</body>
+</html>
