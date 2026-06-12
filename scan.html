@@ -32,7 +32,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Auth guard ── */
     #auth-block {
       position: fixed; inset: 0; background: var(--bg);
       display: flex; align-items: center; justify-content: center;
@@ -41,44 +40,27 @@
     }
     #auth-block.hidden { display: none; }
 
-    /* ── Layout ── */
-    .page-wrap {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 0 16px 80px;
-    }
+    .page-wrap { max-width: 780px; margin: 0 auto; padding: 0 16px 80px; }
     @media (min-width: 600px) { .page-wrap { padding: 0 24px 80px; } }
 
-    /* ── Top nav ── */
     .topnav {
-      padding: 16px 0 0;
-      margin-bottom: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+      padding: 16px 0 0; margin-bottom: 28px;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
     }
     .back-btn {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 13px; font-weight: 500; color: var(--muted);
-      text-decoration: none; transition: color .15s;
-      padding: 6px 0; /* tap area */
+      text-decoration: none; transition: color .15s; padding: 6px 0;
     }
     .back-btn:active, .back-btn:hover { color: var(--accent); }
     .breadcrumb {
       font-size: 11px; color: var(--muted); font-family: var(--mono);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      max-width: 160px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;
     }
     @media (min-width: 480px) { .breadcrumb { max-width: unset; font-size: 12px; } }
     .breadcrumb span { color: var(--border); margin: 0 4px; }
 
-    /* ── Header ── */
-    header {
-      padding: 0 0 28px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 36px;
-    }
+    header { padding: 0 0 28px; border-bottom: 1px solid var(--border); margin-bottom: 36px; }
     .eyebrow {
       font-size: 11px; font-weight: 600; letter-spacing: .12em;
       text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
@@ -89,7 +71,6 @@
     }
     .subtitle { color: var(--muted); font-size: 14px; line-height: 1.6; }
 
-    /* ── Sections ── */
     .section { margin-bottom: 44px; }
     h2 {
       font-size: 17px; font-weight: 700; color: #fff; letter-spacing: -.01em;
@@ -106,41 +87,42 @@
       letter-spacing: .08em; color: var(--accent); margin: 0 0 12px;
     }
 
-    /* ── Cards ── */
     .card {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: 12px; padding: 18px 16px; margin-bottom: 10px;
     }
     @media (min-width: 480px) { .card { padding: 22px 20px; } }
 
-    /* ── Steps ── */
-    .steps { display: flex; flex-direction: column; gap: 14px; }
-    .step { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; }
+    /* ── Steps — larger, gradient circles ── */
+    .steps { display: flex; flex-direction: column; gap: 18px; }
+    .step { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
     .step-num {
-      width: 28px; height: 28px; border-radius: 50%;
-      border: 1.5px solid var(--border);
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, rgba(79,142,247,.18), rgba(124,92,252,.18));
+      border: 1.5px solid rgba(79,142,247,.3);
       display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 600; color: var(--muted);
-      flex-shrink: 0; margin-top: 1px;
+      font-size: 14px; font-weight: 700; color: var(--accent);
+      flex-shrink: 0; margin-top: 2px;
     }
-    .step-body strong { color: #fff; font-weight: 600; font-size: 14px; line-height: 1.4; }
-    .step-body p { color: var(--muted); margin-top: 4px; font-size: 13.5px; line-height: 1.55; }
+    .step-body strong {
+      color: #fff; font-weight: 600; font-size: 15px; line-height: 1.4;
+      display: block; margin-bottom: 4px;
+    }
+    .step-body p { color: var(--muted); font-size: 13.5px; line-height: 1.6; }
+    .step-body .note {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 8px; font-size: 12.5px; color: #d4a04e;
+      background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.2);
+      border-radius: 6px; padding: 6px 10px; line-height: 1.4;
+    }
 
-    /* ── Brand tabs — horizontal scroll on mobile ── */
+    /* ── Tabs ── */
     .tabs-wrap {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      margin-bottom: 16px;
-      /* hide scrollbar visually */
-      scrollbar-width: none;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      margin-bottom: 16px; scrollbar-width: none;
     }
     .tabs-wrap::-webkit-scrollbar { display: none; }
-    .tabs {
-      display: flex;
-      gap: 8px;
-      width: max-content; /* prevent wrapping, enable scroll */
-      padding-bottom: 2px; /* room for focus ring */
-    }
+    .tabs { display: flex; gap: 8px; width: max-content; padding-bottom: 2px; }
     .tab {
       background: var(--surface); border: 1.5px solid var(--border);
       border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600;
@@ -149,6 +131,9 @@
     }
     .tab:active, .tab:hover { border-color: var(--accent); color: var(--accent); }
     .tab.active { border-color: var(--accent); background: rgba(79,142,247,.12); color: var(--accent); }
+    .tab-exception { border-style: dashed; }
+    .tab-exception:hover, .tab-exception:active { border-color: var(--warn); color: var(--warn); border-style: dashed; }
+    .tab-exception.active { border-color: var(--warn); background: rgba(245,166,35,.08); color: var(--warn); border-style: dashed; }
     .brand-content { display: none; }
     .brand-content.active { display: block; }
 
@@ -156,74 +141,54 @@
     .tip {
       display: flex; gap: 10px; align-items: flex-start;
       font-size: 13px; color: var(--muted);
-      padding: 13px 14px; border-radius: 8px; margin-top: 10px;
-      line-height: 1.55;
+      padding: 13px 14px; border-radius: 8px; margin-top: 10px; line-height: 1.55;
     }
     .tip.info  { background: rgba(79,142,247,.08); border: 1px solid rgba(79,142,247,.2); }
     .tip.warn  { background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.25); color: #d4a04e; }
     .tip.ok    { background: rgba(62,207,110,.07); border: 1px solid rgba(62,207,110,.2); color: #58c47b; }
     .tip-icon  { font-size: 15px; flex-shrink: 0; line-height: 1.55; }
 
-    /* ── Spec table — responsive stacked on small screens ── */
-    .table-wrap {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      border-radius: 8px;
+    /* ── Setting list ── */
+    .setting-list { display: flex; flex-direction: column; }
+    .setting-row {
+      display: flex; flex-direction: column; gap: 3px;
+      padding: 12px 0; border-bottom: 1px solid rgba(37,42,56,.7);
     }
-    .spec-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 420px; }
-    .spec-table th {
-      text-align: left; font-size: 10px; font-weight: 600;
-      letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
-      padding: 8px 12px; border-bottom: 1px solid var(--border);
-      white-space: nowrap;
+    .setting-row:last-child { border-bottom: none; }
+    @media (min-width: 480px) {
+      .setting-row { flex-direction: row; gap: 12px; align-items: center; }
     }
-    .spec-table td {
-      padding: 10px 12px; border-bottom: 1px solid rgba(37,42,56,.7);
-      color: var(--text); vertical-align: top;
-    }
-    .spec-table tr:last-child td { border-bottom: none; }
-    .spec-table td:first-child { color: var(--muted); white-space: nowrap; }
-    .val { color: #fff; font-weight: 500; }
-
-    /* ── Problems table — 2-col on mobile (hide "Causa") ── */
-    .prob-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .prob-table th {
-      text-align: left; font-size: 10px; font-weight: 600;
-      letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
-      padding: 8px 12px; border-bottom: 1px solid var(--border);
-    }
-    .prob-table td {
-      padding: 10px 12px; border-bottom: 1px solid rgba(37,42,56,.7);
-      color: var(--muted); font-size: 13px; vertical-align: top;
-    }
-    .prob-table tr:last-child td { border-bottom: none; }
-    .prob-table td:first-child { color: var(--text); font-weight: 500; }
-    .prob-table .col-causa { display: none; }
-    @media (min-width: 560px) { .prob-table .col-causa { display: table-cell; } }
+    .setting-key { font-size: 12px; color: var(--muted); flex-shrink: 0; }
+    @media (min-width: 480px) { .setting-key { width: 160px; font-size: 13px; } }
+    .setting-val { font-size: 14px; color: #fff; font-weight: 600; }
 
     /* ── Checklist ── */
-    .checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: 12px; }
     .checklist li {
       display: flex; align-items: flex-start; gap: 10px;
-      font-size: 13.5px; color: var(--muted); line-height: 1.55;
+      font-size: 14px; color: var(--muted); line-height: 1.55;
     }
-    .checklist li::before {
-      content: '✓'; color: var(--ok); font-weight: 700; flex-shrink: 0; margin-top: 1px;
-    }
+    .checklist li::before { content: '✓'; color: var(--ok); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
     .checklist li strong { color: var(--text); }
 
+    /* ── Problem list ── */
+    .prob-list { display: flex; flex-direction: column; gap: 0; }
+    .prob-item {
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(37,42,56,.7);
+    }
+    .prob-item:last-child { border-bottom: none; }
+    .prob-q { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .prob-a { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+
     code {
-      font-family: var(--mono); font-size: 12px;
-      background: rgba(255,255,255,.06); border: 1px solid var(--border);
-      border-radius: 4px; padding: 1px 6px; color: #c5d0e6;
-      word-break: break-all;
+      font-family: var(--mono); font-size: 12px; background: rgba(255,255,255,.06);
+      border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; color: #c5d0e6;
     }
 
-    /* ── Page nav ── */
     .page-nav {
       margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 10px;
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
     }
     .nav-link {
       display: inline-flex; align-items: center; gap: 6px;
@@ -257,103 +222,114 @@
 
     <header>
       <div class="eyebrow">Guia 01 · Digitalização</div>
-      <h1>Como escanear o RG</h1>
-      <p class="subtitle">Gere um PDF em tamanho A4, colorido, com as duas faces do documento — pronto para envio ou impressão.</p>
+      <h1>Como escanear o documento</h1>
+      <p class="subtitle">Você vai gerar um arquivo PDF com as duas faces do documento. Pode fazer pelo celular ou por um scanner — e leva menos de 5 minutos.</p>
     </header>
 
-    <!-- 1. Antes de começar -->
+    <!-- 1. O que você vai precisar -->
     <section class="section">
-      <h2><span class="sn">1</span> Antes de começar</h2>
+      <h2><span class="sn">1</span> O que você vai precisar</h2>
       <div class="card">
         <ul class="checklist">
-          <li><strong>RG físico</strong> — nas duas faces (frente e verso)</li>
-          <li><strong>Scanner de mesa</strong> (flatbed) — não use o ADF (alimentador automático)</li>
-          <li><strong>Software de digitalização</strong> — veja seção 3</li>
-          <li><strong>Vidro do scanner limpo</strong> — passe um pano de microfibra seco antes</li>
+          <li><strong>O documento nas duas faces</strong> — frente e verso</li>
+          <li><strong>Celular com câmera</strong> (mais fácil) ou scanner conectado ao computador</li>
+          <li><strong>O resultado precisa ser um PDF</strong> — não uma foto JPG. Veja como fazer no passo 3.</li>
         </ul>
       </div>
-      <div class="tip warn" style="margin-top:0">
-        <span class="tip-icon">⚠️</span>
-        <span><strong>Atenção legal:</strong> cópias do RG são permitidas apenas para uso pessoal ou quando exigidas por terceiros (banco, empresa etc.).</span>
-      </div>
     </section>
 
-    <!-- 2. Configurações -->
+    <!-- 2. Configure assim -->
     <section class="section">
-      <h2><span class="sn">2</span> Configurações de digitalização</h2>
+      <h2><span class="sn">2</span> Configure assim</h2>
+      <p style="color:var(--muted); font-size:14px; margin-bottom:14px; line-height:1.6">
+        Ao abrir o app de digitalização, procure estas opções e defina os valores abaixo:
+      </p>
       <div class="card">
-        <div class="table-wrap">
-          <table class="spec-table">
-            <thead>
-              <tr><th>Parâmetro</th><th>Valor</th><th>Por quê</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Resolução</td>
-                <td><span class="val">300 DPI</span></td>
-                <td style="color:var(--muted)">Suficiente para texto e foto. 600 DPI gera arquivo desnecessariamente grande.</td>
-              </tr>
-              <tr>
-                <td>Modo de cor</td>
-                <td><span class="val">Colorido</span></td>
-                <td style="color:var(--muted)">Preserva marcas de segurança e foto original.</td>
-              </tr>
-              <tr>
-                <td>Formato</td>
-                <td><span class="val">PDF</span></td>
-                <td style="color:var(--muted)">Fixa o tamanho de página. Evite JPEG/PNG.</td>
-              </tr>
-              <tr>
-                <td>Tamanho</td>
-                <td><span class="val">A4 (210×297 mm)</span></td>
-                <td style="color:var(--muted)">Não use "tamanho do documento" ou "automático".</td>
-              </tr>
-              <tr>
-                <td>Orientação</td>
-                <td><span class="val">Retrato</span></td>
-                <td style="color:var(--muted)">—</td>
-              </tr>
-              <tr>
-                <td>Compressão PDF</td>
-                <td><span class="val">Baixa / Nenhuma</span></td>
-                <td style="color:var(--muted)">Preserva nitidez para texto fino.</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="setting-list">
+          <div class="setting-row">
+            <span class="setting-key">Cor</span>
+            <span class="setting-val">Colorido</span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-key">Qualidade / Resolução</span>
+            <span class="setting-val">Alta / 300</span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-key">Formato de saída</span>
+            <span class="setting-val">PDF</span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-key">Tamanho da página</span>
+            <span class="setting-val">A4</span>
+          </div>
         </div>
       </div>
-      <div class="tip info">
-        <span class="tip-icon">ℹ️</span>
-        <span>O RG brasileiro mede <strong>85,6 × 54 mm</strong>. Escaneado em A4, aparece centralizado no tamanho real com espaço branco ao redor — isso é correto.</span>
+      <div class="tip warn">
+        <span class="tip-icon">⚠️</span>
+        <span>Se aparecer a opção <strong>"Tamanho automático"</strong> ou <strong>"Detectar bordas"</strong>, deixe desativada e escolha <strong>A4</strong> manualmente.</span>
       </div>
     </section>
 
-    <!-- 3. Por marca -->
+    <!-- 3. Passo a passo -->
     <section class="section">
-      <h2><span class="sn">3</span> Passo a passo por marca</h2>
+      <h2><span class="sn">3</span> Passo a passo</h2>
       <div class="tabs-wrap">
         <div class="tabs">
           <button class="tab active" onclick="showBrand('epson', event)">Epson</button>
           <button class="tab" onclick="showBrand('hp', event)">HP</button>
           <button class="tab" onclick="showBrand('canon', event)">Canon</button>
           <button class="tab" onclick="showBrand('brother', event)">Brother</button>
-          <button class="tab" onclick="showBrand('samsung', event)">Samsung / Xerox</button>
+          <button class="tab tab-exception" onclick="showBrand('phone', event)">Sem scanner</button>
         </div>
       </div>
 
-      <!-- EPSON -->
+      <!-- Epson -->
       <div class="brand-content active" id="brand-epson">
         <div class="card">
-          <h3>Epson Scan 2 / Smart Panel</h3>
+          <h3>Epson — Epson Scan 2 ou Smart Panel</h3>
           <div class="steps">
-            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Abra o vidro do scanner</strong><p>Coloque o RG com a face para baixo, encostado no canto marcado com seta (canto superior esquerdo).</p></div></div>
-            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Abra o Epson Scan 2</strong><p>Menu Iniciar → Epson → <em>Epson Scan 2</em>. Ou use o <em>Epson Smart Panel</em>.</p></div></div>
-            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Modo Profissional</strong><p>Canto superior direito: selecione <em>Modo Profissional</em> ou <em>Modo Avançado</em>.</p></div></div>
-            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Configure os parâmetros</strong><p>Tipo de documento: <em>Reflexão</em> → Fonte: <em>Vidro do scanner</em> → Imagem: <em>Cor</em> → Resolução: <em>300 dpi</em> → Tamanho: <em>A4</em>.</p></div></div>
-            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Pré-visualize</strong><p>Confirme que o RG aparece completo. <strong>Não use recorte automático.</strong></p></div></div>
-            <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Formato de saída: PDF</strong><p>Em <em>Configurações de imagem</em> → <em>PDF</em>. Desmarque "Compactar PDF" se disponível.</p></div></div>
-            <div class="step"><div class="step-num">7</div><div class="step-body"><strong>Digitalize a frente</strong><p>Clique em <em>Digitalizar</em>. Salve como <code>rg-frente.pdf</code>.</p></div></div>
-            <div class="step"><div class="step-num">8</div><div class="step-body"><strong>Vire o RG e repita</strong><p>Posicione o verso e repita os passos 4–7. Salve como <code>rg-verso.pdf</code>.</p></div></div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Coloque o documento com a face para baixo no vidro</strong>
+                <p>Encoste no canto com seta (geralmente canto superior esquerdo).</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Abra o Epson Scan 2 ou Epson Smart Panel</strong>
+                <p>Menu Iniciar → Epson.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Selecione "Modo Avançado" ou "Modo Profissional"</strong>
+                <p>Fica no canto superior da tela.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Defina as configurações</strong>
+                <p>Cor: <strong>Colorido</strong> · Resolução: <strong>300 dpi</strong> · Tamanho: <strong>A4</strong> · Formato: <strong>PDF</strong></p>
+                <span class="note">⚠️ Desmarque "Recorte automático" ou "Detecção de borda" se aparecer.</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <strong>Clique em "Digitalizar" e salve como rg-frente.pdf</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">6</div>
+              <div class="step-body">
+                <strong>Vire o documento e repita para o verso</strong>
+                <p>Salve como rg-verso.pdf.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -361,132 +337,257 @@
       <!-- HP -->
       <div class="brand-content" id="brand-hp">
         <div class="card">
-          <h3>HP Smart / HP Scan</h3>
+          <h3>HP — HP Smart</h3>
           <div class="steps">
-            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Posicione o RG no vidro</strong><p>Face para baixo, alinhado ao canto com seta ou triângulo.</p></div></div>
-            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Abra o HP Smart</strong><p>Menu Iniciar → <em>HP Smart</em> → selecione a impressora → <em>Digitalizar</em>.</p></div></div>
-            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Escolha "Scanner"</strong><p>Selecione <em>Scanner</em> (não <em>Câmera do documento</em>).</p></div></div>
-            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Configure</strong><p>Tipo: <em>Documento</em> → Cor → Resolução: <em>300 ppp</em> → Tamanho: <em>A4</em> → Salvar como: <em>PDF</em>.</p></div></div>
-            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Desative o recorte automático</strong><p>Se houver <em>"Cortar automaticamente"</em>, desmarque para preservar o A4 completo.</p></div></div>
-            <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Digitalize frente e verso</strong><p>Salve <code>rg-frente.pdf</code> e <code>rg-verso.pdf</code> separadamente.</p></div></div>
-          </div>
-          <div class="tip info">
-            <span class="tip-icon">ℹ️</span>
-            <span>No <strong>HP Scan</strong> (desktop clássico): <em>Ferramentas → Configurações de digitalização</em> para fixar o tamanho em A4.</span>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Coloque o documento com a face para baixo no vidro</strong>
+                <p>Alinhado ao canto com triângulo ou seta.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Abra o HP Smart → selecione a impressora → "Digitalizar"</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Escolha "Scanner" (não "Câmera do documento")</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Defina as configurações</strong>
+                <p>Tipo: <strong>Documento</strong> · Cor: <strong>Colorido</strong> · Resolução: <strong>300 ppp</strong> · Tamanho: <strong>A4</strong> · Salvar como: <strong>PDF</strong></p>
+                <span class="note">⚠️ Desative "Cortar automaticamente" se aparecer.</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <strong>Digitalize frente e verso separadamente</strong>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- CANON -->
+      <!-- Canon -->
       <div class="brand-content" id="brand-canon">
         <div class="card">
-          <h3>Canon IJ Scan Utility / ScanGear</h3>
+          <h3>Canon — IJ Scan Utility</h3>
           <div class="steps">
-            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Coloque o RG no vidro</strong><p>Face para baixo, canto superior esquerdo alinhado à marca.</p></div></div>
-            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Abra o IJ Scan Utility</strong><p>Menu Iniciar → Canon Utilities → <em>IJ Scan Utility</em>.</p></div></div>
-            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Acesse as configurações</strong><p>Ícone de engrenagem → <em>Digitalização de documento</em>.</p></div></div>
-            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Ajuste os parâmetros</strong><p>Origem: <em>Plataforma</em> → Cor: <em>Colorido</em> → Tamanho: <em>A4</em> → Resolução: <em>300 dpi</em> → Formato: <em>PDF</em>.</p></div></div>
-            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Desative compressão e clique em "Documento"</strong><p>O scan inicia. Repita para o verso.</p></div></div>
-          </div>
-          <div class="tip info">
-            <span class="tip-icon">ℹ️</span>
-            <span>Pelo <strong>ScanGear</strong>: acesso via IJ Scan Utility → Abrir ScanGear. Defina tamanho de saída como A4.</span>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Coloque o documento com a face para baixo no canto marcado</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Abra o IJ Scan Utility</strong>
+                <p>Menu Iniciar → Canon Utilities → IJ Scan Utility.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Abra as configurações (ícone de engrenagem)</strong>
+                <p>Cor: <strong>Colorido</strong> · Resolução: <strong>300 dpi</strong> · Tamanho: <strong>A4</strong> · Formato: <strong>PDF</strong></p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Clique em "Documento" para iniciar</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <strong>Repita para o verso</strong>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- BROTHER -->
+      <!-- Brother -->
       <div class="brand-content" id="brand-brother">
         <div class="card">
-          <h3>Brother ControlCenter4 / iPrint&amp;Scan</h3>
+          <h3>Brother — ControlCenter4 ou iPrint&amp;Scan</h3>
           <div class="steps">
-            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Coloque o RG no vidro</strong><p>Face para baixo, canto superior esquerdo alinhado à linha de referência.</p></div></div>
-            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Abra o ControlCenter4</strong><p>Menu Iniciar → Brother → <em>ControlCenter4</em> → <em>Modo Avançado</em>.</p></div></div>
-            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Aba Digitalização → Arquivo → Configurações</strong><p>Tipo: <em>PDF</em> → Qualidade: <em>Alta</em> → Resolução: <em>300 dpi</em> → Cor 24 bits → Tamanho: <em>A4</em>.</p></div></div>
-            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Desative recorte automático</strong><p>Em <em>Configurações avançadas</em>, desmarque <em>"Recorte automático"</em> ou <em>"Detecção automática de borda"</em>.</p></div></div>
-            <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Digitalize e salve frente e verso</strong></div></div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Coloque o documento com a face para baixo no canto de referência</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Abra o ControlCenter4 em "Modo Avançado"</strong>
+                <p>Menu Iniciar → Brother → ControlCenter4.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Aba Digitalização → Arquivo → Configurações</strong>
+                <p>Formato: <strong>PDF</strong> · Resolução: <strong>300 dpi</strong> · Cor: <strong>Colorido</strong> · Tamanho: <strong>A4</strong></p>
+                <span class="note">⚠️ Desmarque "Recorte automático" se aparecer.</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Digitalize frente e verso separadamente</strong>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- SAMSUNG / XEROX -->
-      <div class="brand-content" id="brand-samsung">
+      <!-- Sem scanner (exceção) -->
+      <div class="brand-content" id="brand-phone">
+        <div class="tip warn" style="margin-bottom: 12px">
+          <span class="tip-icon">⚠️</span>
+          <span><strong>Use esta opção apenas se não tiver acesso a um scanner.</strong> O celular não garante o tamanho exato da página — o documento pode sair com dimensões levemente diferentes do esperado. Se possível, use uma impressora multifuncional (scanner).</span>
+        </div>
+
         <div class="card">
-          <h3>Samsung Easy Document Creator / Xerox</h3>
+          <h3>iPhone — app Notas</h3>
           <div class="steps">
-            <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Coloque o RG no vidro</strong><p>Face para baixo, alinhado ao canto marcado.</p></div></div>
-            <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Abra o Samsung Easy Document Creator</strong><p>Menu Iniciar → Samsung Printers → <em>Easy Document Creator</em>.</p></div></div>
-            <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Digitalização básica → Configurações</strong><p>Tipo: <em>Cor</em> → Resolução: <em>300 dpi</em> → Tamanho: <em>A4</em> → Formato: <em>PDF único</em>.</p></div></div>
-            <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Digitalize frente e verso</strong></div></div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Abra o app Notas (ícone amarelo) e crie uma nova nota</strong>
+                <p>Toque no <strong>+</strong> para criar.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Toque no ícone de câmera → "Digitalizar documentos"</strong>
+                <p>O ícone de câmera fica na barra acima do teclado.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Aponte para o documento em fundo liso e bem iluminado</strong>
+                <p>O app detecta automaticamente. Se quiser controlar, toque no botão branco.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Confirme que o documento aparece completo e toque em "Manter"</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <strong>Repita para o verso e toque em "Salvar"</strong>
+                <p>Compartilhe → <strong>Salvar em Arquivos</strong>. O arquivo é salvo como PDF.</p>
+              </div>
+            </div>
           </div>
-          <div class="tip info">
-            <span class="tip-icon">ℹ️</span>
-            <span><strong>Xerox:</strong> painel frontal → <em>Digitalizar → Digitalizar para PC → Configurações → 300 dpi, Cor, A4, PDF</em>.</span>
+        </div>
+
+        <div class="card" style="margin-top:10px">
+          <h3>Android — Google Drive</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Abra o Google Drive</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Toque no + (canto inferior direito) → "Digitalizar"</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Aponte para o documento em fundo liso e fotografe</strong>
+                <p>Moldura azul indica que o documento foi detectado.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Confirme as bordas → ✓ → repita para o verso → Salvar</strong>
+                <p>Dê o nome <strong>rg-frente</strong> e <strong>rg-verso</strong>. Fica salvo no Drive como PDF.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 4. Conferir o PDF -->
+    <!-- 4. Verifique o resultado -->
     <section class="section">
-      <h2><span class="sn">4</span> Conferir o PDF gerado</h2>
+      <h2><span class="sn">4</span> Verifique o resultado</h2>
+      <p style="color:var(--muted); font-size:14px; margin-bottom:14px; line-height:1.6">
+        Antes de enviar, abra o arquivo e confira:
+      </p>
       <div class="card">
         <ul class="checklist">
-          <li><strong>Tamanho A4</strong> — Adobe Reader: Ctrl+D → confirme 210 × 297 mm.</li>
-          <li><strong>RG sem cortes</strong> — completo, com espaço branco ao redor.</li>
-          <li><strong>Texto legível a 100%</strong> — se borrado, re-digitalize a 600 dpi.</li>
-          <li><strong>Foto com cores naturais</strong> — sem esverdeado ou saturação excessiva.</li>
-          <li><strong>Dois arquivos</strong> — <code>rg-frente.pdf</code> e <code>rg-verso.pdf</code>.</li>
+          <li><strong>O arquivo termina em .pdf</strong> — não em .jpg ou .png</li>
+          <li><strong>Consegue abrir normalmente</strong> — sem mensagem de erro</li>
+          <li><strong>O documento aparece completo</strong> — sem cortes nos cantos, com um espaço branco ao redor</li>
+          <li><strong>As letras estão nítidas</strong> — nome, número e data de nascimento legíveis</li>
+          <li><strong>A foto está em cores naturais</strong> — sem tom amarelado ou esverdeado</li>
+          <li><strong>Você tem frente e verso</strong> — dois arquivos ou duas páginas no mesmo PDF</li>
         </ul>
+      </div>
+      <div class="tip ok">
+        <span class="tip-icon">✅</span>
+        <span>Tudo certo? Pode seguir para o próximo passo e enviar o arquivo.</span>
       </div>
     </section>
 
-    <!-- 5. Problemas comuns -->
+    <!-- 5. Algo deu errado? -->
     <section class="section">
-      <h2><span class="sn">5</span> Problemas comuns</h2>
+      <h2><span class="sn">5</span> Algo deu errado?</h2>
       <div class="card">
-        <table class="prob-table">
-          <thead>
-            <tr>
-              <th>Problema</th>
-              <th class="col-causa">Causa</th>
-              <th>Solução</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>RG cortado no PDF</td>
-              <td class="col-causa">Recorte automático ativado</td>
-              <td>Desative "Detecção de borda" e force tamanho A4.</td>
-            </tr>
-            <tr>
-              <td>Texto borrado</td>
-              <td class="col-causa">DPI baixo ou vidro sujo</td>
-              <td>Re-digitalize a 300 dpi. Limpe o vidro com microfibra.</td>
-            </tr>
-            <tr>
-              <td>PDF muito grande (&gt;5 MB)</td>
-              <td class="col-causa">600 dpi ou sem compressão</td>
-              <td>Use 300 dpi. Adobe Reader: Arquivo → Reduzir tamanho.</td>
-            </tr>
-            <tr>
-              <td>Foto esverdeada</td>
-              <td class="col-causa">Vidro sujo ou luz ambiente</td>
-              <td>Limpe o vidro. Feche a tampa completamente.</td>
-            </tr>
-            <tr>
-              <td>RG inclinado</td>
-              <td class="col-causa">Posicionamento incorreto</td>
-              <td>Encoste na marca de referência antes de escanear.</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="prob-list">
+          <div class="prob-item">
+            <div class="prob-q">O documento saiu cortado no PDF</div>
+            <div class="prob-a">Desmarque a opção de "recorte automático" ou "detectar bordas" e escaneie novamente com tamanho fixo em A4.</div>
+          </div>
+          <div class="prob-item">
+            <div class="prob-q">A imagem ficou borrada ou com texto ilegível</div>
+            <div class="prob-a">Verifique se o vidro do scanner está limpo. Aumente a resolução para 300 dpi e refaça.</div>
+          </div>
+          <div class="prob-item">
+            <div class="prob-q">O arquivo ficou muito grande (acima de 5 MB)</div>
+            <div class="prob-a">Reduza a resolução para 300 dpi. Se ainda estiver grande, abra no Adobe Reader e use Arquivo → Salvar como outro → PDF com tamanho reduzido.</div>
+          </div>
+          <div class="prob-item">
+            <div class="prob-q">A foto ficou com cor esverdeada ou amarelada</div>
+            <div class="prob-a">Feche completamente a tampa do scanner ao digitalizar. Limpe o vidro com um pano seco antes de tentar novamente.</div>
+          </div>
+          <div class="prob-item">
+            <div class="prob-q">O documento saiu inclinado</div>
+            <div class="prob-a">Encoste o documento na marcação de referência no canto do scanner antes de digitalizar.</div>
+          </div>
+        </div>
       </div>
     </section>
 
     <div class="page-nav">
       <a class="nav-link" href="index.html">← Início</a>
-      <a class="nav-link next" href="print.html">Imprimir →</a>
+      <a class="nav-link next" href="send.html">Enviar →</a>
     </div>
 
   </div>

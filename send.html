@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enviar PDF · Guia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #0f1117;
+      --surface:  #181c27;
+      --border:   #252a38;
+      --accent:   #4f8ef7;
+      --accent2:  #7c5cfc;
+      --warn:     #f5a623;
+      --ok:       #3ecf6e;
+      --text:     #e4e8f0;
+      --muted:    #8893a8;
+      --danger:   #f75f5f;
+      --mono:     'JetBrains Mono', monospace;
+      --sans:     'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #auth-block {
+      position: fixed; inset: 0; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999; flex-direction: column; gap: 14px;
+      font-size: 14px; color: var(--muted); padding: 24px; text-align: center;
+    }
+    #auth-block.hidden { display: none; }
+
+    .page-wrap { max-width: 780px; margin: 0 auto; padding: 0 16px 80px; }
+    @media (min-width: 600px) { .page-wrap { padding: 0 24px 80px; } }
+
+    .topnav {
+      padding: 16px 0 0; margin-bottom: 28px;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      text-decoration: none; transition: color .15s; padding: 6px 0;
+    }
+    .back-btn:active, .back-btn:hover { color: var(--accent); }
+    .breadcrumb {
+      font-size: 11px; color: var(--muted); font-family: var(--mono);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;
+    }
+    @media (min-width: 480px) { .breadcrumb { max-width: unset; font-size: 12px; } }
+    .breadcrumb span { color: var(--border); margin: 0 4px; }
+
+    header { padding: 0 0 28px; border-bottom: 1px solid var(--border); margin-bottom: 36px; }
+    .eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+    }
+    h1 {
+      font-size: clamp(22px, 5.5vw, 32px); font-weight: 700;
+      line-height: 1.2; letter-spacing: -.02em; color: #fff; margin-bottom: 10px;
+    }
+    .subtitle { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    .section { margin-bottom: 44px; }
+    h2 {
+      font-size: 17px; font-weight: 700; color: #fff; letter-spacing: -.01em;
+      margin: 0 0 16px; display: flex; align-items: center; gap: 10px;
+    }
+    h2 .sn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; border-radius: 6px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      font-size: 12px; font-weight: 700; color: #fff;
+    }
+    h3 {
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin: 0 0 12px;
+    }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 16px; margin-bottom: 10px;
+    }
+    @media (min-width: 480px) { .card { padding: 22px 20px; } }
+
+    /* ── Large steps for non-technical audience ── */
+    .steps { display: flex; flex-direction: column; gap: 18px; }
+    .step { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, rgba(79,142,247,.18), rgba(124,92,252,.18));
+      border: 1.5px solid rgba(79,142,247,.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--accent); flex-shrink: 0; margin-top: 2px;
+    }
+    .step-body strong {
+      color: #fff; font-weight: 600; font-size: 15px; line-height: 1.4;
+      display: block; margin-bottom: 4px;
+    }
+    .step-body p { color: var(--muted); font-size: 13.5px; line-height: 1.55; }
+    .step-body .note {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 8px; font-size: 12.5px; color: #d4a04e;
+      background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.2);
+      border-radius: 6px; padding: 6px 10px; line-height: 1.4;
+    }
+
+    /* ── Contact box ── */
+    .contact-box {
+      background: linear-gradient(135deg, rgba(79,142,247,.08), rgba(124,92,252,.06));
+      border: 1.5px solid rgba(79,142,247,.25);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 10px;
+    }
+    .contact-box .contact-label {
+      font-size: 10px; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+      font-family: var(--mono);
+    }
+    .contact-box .contact-value {
+      font-size: 18px; font-weight: 700; color: #fff;
+      font-family: var(--mono); letter-spacing: .02em;
+    }
+    .contact-box .contact-hint {
+      font-size: 12.5px; color: var(--muted); margin-top: 4px;
+    }
+
+    /* ── Tabs ── */
+    .tabs-wrap {
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      margin-bottom: 16px; scrollbar-width: none;
+    }
+    .tabs-wrap::-webkit-scrollbar { display: none; }
+    .tabs { display: flex; gap: 8px; width: max-content; padding-bottom: 2px; }
+    .tab {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600;
+      color: var(--muted); cursor: pointer; transition: all .15s; font-family: var(--sans);
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .tab:active, .tab:hover { border-color: var(--accent); color: var(--accent); }
+    .tab.active { border-color: var(--accent); background: rgba(79,142,247,.12); color: var(--accent); }
+    .ch-content { display: none; }
+    .ch-content.active { display: block; }
+
+    .tip {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 13px; color: var(--muted);
+      padding: 13px 14px; border-radius: 8px; margin-top: 10px; line-height: 1.55;
+    }
+    .tip.info   { background: rgba(79,142,247,.08); border: 1px solid rgba(79,142,247,.2); }
+    .tip.warn   { background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.25); color: #d4a04e; }
+    .tip.ok     { background: rgba(62,207,110,.07); border: 1px solid rgba(62,207,110,.2); color: #58c47b; }
+    .tip-icon   { font-size: 15px; flex-shrink: 0; line-height: 1.55; }
+
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .checklist li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13.5px; color: var(--muted); line-height: 1.55;
+    }
+    .checklist li::before { content: '✓'; color: var(--ok); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .checklist li strong { color: var(--text); }
+
+    code {
+      font-family: var(--mono); font-size: 12px; background: rgba(255,255,255,.06);
+      border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; color: #c5d0e6;
+      word-break: break-all;
+    }
+
+    .page-nav {
+      margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    }
+    .nav-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none;
+      padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 9px;
+      transition: all .15s; flex: 1; justify-content: center;
+    }
+    .nav-link:active, .nav-link:hover {
+      color: var(--accent); border-color: var(--accent); background: rgba(79,142,247,.06);
+    }
+    @media (min-width: 480px) {
+      .nav-link { flex: unset; justify-content: flex-start; }
+      .nav-link.next { margin-left: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="auth-block">
+    <div style="font-size:28px">🔒</div>
+    <div>Sessão expirada.</div>
+    <a href="index.html" style="color:var(--accent); font-weight:600">Voltar ao início →</a>
+  </div>
+
+  <div class="page-wrap">
+
+    <nav class="topnav">
+      <a class="back-btn" href="scan.html">← Escanear</a>
+      <span class="breadcrumb">rg.lucafchala.com <span>/</span> send</span>
+    </nav>
+
+    <header>
+      <div class="eyebrow">Guia 02 · Envio</div>
+      <h1>Como enviar o PDF</h1>
+      <p class="subtitle">Você digitalizou o documento. Agora envie o arquivo PDF — por WhatsApp ou e-mail, em menos de 1 minuto.</p>
+    </header>
+
+    <!-- 1. O que você vai enviar -->
+    <section class="section">
+      <h2><span class="sn">1</span> Antes de enviar</h2>
+      <div class="card">
+        <ul class="checklist">
+          <li><strong>O arquivo é um PDF</strong> — extensão <code>.pdf</code>. Se você seguiu o Guia 01, já está certo.</li>
+          <li><strong>Tem frente e verso</strong> — dois arquivos separados ou duas páginas no mesmo PDF.</li>
+          <li><strong>Consegue abrir</strong> — abra o arquivo e confirme que a imagem do documento está visível.</li>
+        </ul>
+      </div>
+      <div class="tip warn">
+        <span class="tip-icon">⚠️</span>
+        <span>Não envie foto tirada com o celular no lugar do PDF. A foto perde qualidade ao ser comprimida e não serve para impressão em tamanho correto.</span>
+      </div>
+    </section>
+
+    <!-- 2. Como enviar -->
+    <section class="section">
+      <h2><span class="sn">2</span> Enviar o arquivo</h2>
+
+      <div class="tabs-wrap">
+        <div class="tabs">
+          <button class="tab active" onclick="showCh('whatsapp', event)">WhatsApp</button>
+          <button class="tab" onclick="showCh('email', event)">E-mail</button>
+        </div>
+      </div>
+
+      <!-- WhatsApp -->
+      <div class="ch-content active" id="ch-whatsapp">
+        <div class="contact-box">
+          <div class="contact-label">Enviar para</div>
+          <div class="contact-value">[número do WhatsApp]</div>
+          <div class="contact-hint">Salve o contato antes de enviar.</div>
+        </div>
+        <div class="card">
+          <h3>Passo a passo — WhatsApp</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Abra o WhatsApp e encontre o contato</strong>
+                <p>Acesse a conversa com o contato salvo acima.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Toque no clipe (📎) e escolha "Documento"</strong>
+                <p>Importante: selecione <strong>"Documento"</strong>, não "Galeria" nem "Foto".</p>
+                <span class="note">⚠️ Enviar pela Galeria transforma o PDF em imagem e perde qualidade.</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Encontre o arquivo PDF e selecione</strong>
+                <p>Normalmente está na pasta <strong>Downloads</strong> ou <strong>Documentos</strong> do celular.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Toque em Enviar</strong>
+                <p>Aguarde o upload completar. Se tiver frente e verso separados, repita para o segundo arquivo.</p>
+              </div>
+            </div>
+          </div>
+          <div class="tip ok">
+            <span class="tip-icon">✅</span>
+            <span>Pronto! Você receberá uma confirmação assim que o arquivo for verificado.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- E-mail -->
+      <div class="ch-content" id="ch-email">
+        <div class="contact-box">
+          <div class="contact-label">Enviar para</div>
+          <div class="contact-value">[endereço de e-mail]</div>
+          <div class="contact-hint">Assunto: PDF para impressão.</div>
+        </div>
+        <div class="card">
+          <h3>Passo a passo — E-mail</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Abra seu aplicativo de e-mail</strong>
+                <p>Gmail, Outlook, ou qualquer outro que você usa.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Crie um novo e-mail</strong>
+                <p>Para: <strong>[endereço de e-mail]</strong><br>Assunto: <strong>PDF para impressão</strong></p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Anexe o arquivo PDF</strong>
+                <p>Toque no clipe ou em "Anexar arquivo". Selecione o PDF — não cole no corpo do e-mail.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Envie</strong>
+                <p>Se tiver frente e verso separados, anexe os dois arquivos no mesmo e-mail.</p>
+              </div>
+            </div>
+          </div>
+          <div class="tip ok">
+            <span class="tip-icon">✅</span>
+            <span>Pronto! Você receberá uma confirmação de resposta assim que o arquivo for verificado.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Depois de enviar -->
+    <section class="section">
+      <h2><span class="sn">3</span> Depois de enviar</h2>
+      <div class="card">
+        <ul class="checklist">
+          <li><strong>Aguarde a confirmação</strong> — você receberá uma mensagem ou resposta de e-mail confirmando o recebimento</li>
+          <li><strong>Não precisa fazer mais nada</strong> — o arquivo será verificado e a impressão será providenciada</li>
+          <li><strong>Dúvidas?</strong> — entre em contato pelo mesmo canal que usou para enviar</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="page-nav">
+      <a class="nav-link" href="scan.html">← Escanear</a>
+      <a class="nav-link next" href="receive.html">Receber →</a>
+    </div>
+
+  </div>
+
+  <script>
+    if (sessionStorage.getItem('rg_auth') !== '1') {
+      document.getElementById('auth-block').classList.remove('hidden');
+    } else {
+      document.getElementById('auth-block').classList.add('hidden');
+    }
+
+    function showCh(ch, event) {
+      document.querySelectorAll('.ch-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      document.getElementById('ch-' + ch).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+  </script>
+</body>
+</html>
