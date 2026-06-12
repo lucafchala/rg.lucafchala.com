@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enviar PDF · Guia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #0f1117;
+      --surface:  #181c27;
+      --border:   #252a38;
+      --accent:   #4f8ef7;
+      --accent2:  #7c5cfc;
+      --warn:     #f5a623;
+      --ok:       #3ecf6e;
+      --text:     #e4e8f0;
+      --muted:    #8893a8;
+      --danger:   #f75f5f;
+      --mono:     'JetBrains Mono', monospace;
+      --sans:     'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #auth-block {
+      position: fixed; inset: 0; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999; flex-direction: column; gap: 14px;
+      font-size: 14px; color: var(--muted); padding: 24px; text-align: center;
+    }
+    #auth-block.hidden { display: none; }
+
+    .page-wrap { max-width: 780px; margin: 0 auto; padding: 0 16px 80px; }
+    @media (min-width: 600px) { .page-wrap { padding: 0 24px 80px; } }
+
+    .topnav {
+      padding: 16px 0 0; margin-bottom: 28px;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      text-decoration: none; transition: color .15s; padding: 6px 0;
+    }
+    .back-btn:active, .back-btn:hover { color: var(--accent); }
+    .breadcrumb {
+      font-size: 11px; color: var(--muted); font-family: var(--mono);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;
+    }
+    @media (min-width: 480px) { .breadcrumb { max-width: unset; font-size: 12px; } }
+    .breadcrumb span { color: var(--border); margin: 0 4px; }
+
+    header { padding: 0 0 28px; border-bottom: 1px solid var(--border); margin-bottom: 36px; }
+    .eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+    }
+    h1 {
+      font-size: clamp(22px, 5.5vw, 32px); font-weight: 700;
+      line-height: 1.2; letter-spacing: -.02em; color: #fff; margin-bottom: 10px;
+    }
+    .subtitle { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    .section { margin-bottom: 44px; }
+    h2 {
+      font-size: 17px; font-weight: 700; color: #fff; letter-spacing: -.01em;
+      margin: 0 0 16px; display: flex; align-items: center; gap: 10px;
+    }
+    h2 .sn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; border-radius: 6px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      font-size: 12px; font-weight: 700; color: #fff;
+    }
+    h3 {
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin: 0 0 12px;
+    }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 16px; margin-bottom: 10px;
+    }
+    @media (min-width: 480px) { .card { padding: 22px 20px; } }
+
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+    .step { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; color: var(--muted); flex-shrink: 0; margin-top: 1px;
+    }
+    .step-body strong { color: #fff; font-weight: 600; font-size: 14px; line-height: 1.4; }
+    .step-body p { color: var(--muted); margin-top: 4px; font-size: 13.5px; line-height: 1.55; }
+
+    .tabs-wrap {
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      margin-bottom: 16px; scrollbar-width: none;
+    }
+    .tabs-wrap::-webkit-scrollbar { display: none; }
+    .tabs { display: flex; gap: 8px; width: max-content; padding-bottom: 2px; }
+    .tab {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600;
+      color: var(--muted); cursor: pointer; transition: all .15s; font-family: var(--sans);
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .tab:active, .tab:hover { border-color: var(--accent); color: var(--accent); }
+    .tab.active { border-color: var(--accent); background: rgba(79,142,247,.12); color: var(--accent); }
+    .ch-content { display: none; }
+    .ch-content.active { display: block; }
+
+    .tip {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 13px; color: var(--muted);
+      padding: 13px 14px; border-radius: 8px; margin-top: 10px; line-height: 1.55;
+    }
+    .tip.info   { background: rgba(79,142,247,.08); border: 1px solid rgba(79,142,247,.2); }
+    .tip.warn   { background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.25); color: #d4a04e; }
+    .tip.ok     { background: rgba(62,207,110,.07); border: 1px solid rgba(62,207,110,.2); color: #58c47b; }
+    .tip.danger { background: rgba(247,95,95,.07); border: 1px solid rgba(247,95,95,.2); color: #e87878; }
+    .tip-icon   { font-size: 15px; flex-shrink: 0; line-height: 1.55; }
+
+    .setting-list { display: flex; flex-direction: column; }
+    .setting-row {
+      display: flex; flex-direction: column; gap: 3px;
+      padding: 12px 0; border-bottom: 1px solid rgba(37,42,56,.7);
+    }
+    .setting-row:last-child { border-bottom: none; }
+    @media (min-width: 480px) {
+      .setting-row { flex-direction: row; gap: 12px; align-items: flex-start; }
+    }
+    .setting-key { font-size: 12px; color: var(--muted); flex-shrink: 0; }
+    @media (min-width: 480px) {
+      .setting-key { width: 180px; padding-top: 1px; font-size: 13px; }
+    }
+    .setting-val { font-size: 13.5px; color: var(--text); }
+    .setting-val strong { color: #fff; }
+
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .checklist li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13.5px; color: var(--muted); line-height: 1.55;
+    }
+    .checklist li::before { content: '✓'; color: var(--ok); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .checklist li strong { color: var(--text); }
+
+    .blocklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .blocklist li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13.5px; color: var(--muted); line-height: 1.55;
+    }
+    .blocklist li::before { content: '✕'; color: var(--danger); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .blocklist li strong { color: var(--text); }
+
+    code {
+      font-family: var(--mono); font-size: 12px; background: rgba(255,255,255,.06);
+      border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; color: #c5d0e6;
+      word-break: break-all;
+    }
+
+    .page-nav {
+      margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    }
+    .nav-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none;
+      padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 9px;
+      transition: all .15s; flex: 1; justify-content: center;
+    }
+    .nav-link:active, .nav-link:hover {
+      color: var(--accent); border-color: var(--accent); background: rgba(79,142,247,.06);
+    }
+    @media (min-width: 480px) {
+      .nav-link { flex: unset; justify-content: flex-start; }
+      .nav-link.next { margin-left: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="auth-block">
+    <div style="font-size:28px">🔒</div>
+    <div>Sessão expirada.</div>
+    <a href="index.html" style="color:var(--accent); font-weight:600">Voltar ao início →</a>
+  </div>
+
+  <div class="page-wrap">
+
+    <nav class="topnav">
+      <a class="back-btn" href="index.html">← Início</a>
+      <span class="breadcrumb">rg.lucafchala.com <span>/</span> send</span>
+    </nav>
+
+    <header>
+      <div class="eyebrow">Guia 03 · Envio</div>
+      <h1>Como enviar o PDF com segurança</h1>
+      <p class="subtitle">Confirme o arquivo, escolha o canal certo e proteja os dados pessoais durante o envio.</p>
+    </header>
+
+    <!-- 1. Verificar antes de enviar -->
+    <section class="section">
+      <h2><span class="sn">1</span> Verificar antes de enviar</h2>
+      <div class="card">
+        <ul class="checklist">
+          <li><strong>Formato PDF confirmado</strong> — extensão <code>.pdf</code>, não <code>.jpg</code>, <code>.png</code> ou foto tirada com celular</li>
+          <li><strong>Arquivo abre corretamente</strong> — abra o PDF e confira que frente e verso estão legíveis e sem cortes</li>
+          <li><strong>Tamanho razoável</strong> — entre 100 KB e 5 MB por arquivo; arquivos muito pequenos podem ter baixa qualidade</li>
+          <li><strong>Nome identificável</strong> — renomeie para <code>rg-frente.pdf</code> e <code>rg-verso.pdf</code> antes de enviar</li>
+        </ul>
+      </div>
+      <div class="tip warn">
+        <span class="tip-icon">⚠️</span>
+        <span>Nunca envie foto do RG no lugar do PDF. Apps comprimem imagens automaticamente, degradando a qualidade necessária para impressão no tamanho correto.</span>
+      </div>
+    </section>
+
+    <!-- 2. Canal de envio -->
+    <section class="section">
+      <h2><span class="sn">2</span> Escolher o canal de envio</h2>
+      <div class="tabs-wrap">
+        <div class="tabs">
+          <button class="tab active" onclick="showCh('whatsapp', event)">WhatsApp</button>
+          <button class="tab" onclick="showCh('email', event)">E-mail</button>
+          <button class="tab" onclick="showCh('drive', event)">Google Drive</button>
+        </div>
+      </div>
+
+      <!-- WhatsApp -->
+      <div class="ch-content active" id="ch-whatsapp">
+        <div class="card">
+          <h3>WhatsApp — recomendado para agilidade</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Abra a conversa direta com o destinatário</strong>
+                <p>Use conversa individual — nunca envie em grupos.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Toque no clipe (anexo) → "Documento"</strong>
+                <p>Nunca use "Galeria" ou "Foto" — isso converte o arquivo para imagem e perde o formato PDF.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Localize e selecione o arquivo PDF</strong>
+                <p>Navegue até a pasta onde está o arquivo. Confirme o nome antes de enviar.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Envie e aguarde a confirmação</strong>
+                <p>Espere os dois tiques azuis (mensagem lida). Em seguida, peça confirmação de que o arquivo abriu.</p>
+              </div>
+            </div>
+          </div>
+          <div class="tip ok">
+            <span class="tip-icon">🔒</span>
+            <span>O WhatsApp usa <strong>criptografia de ponta a ponta</strong>. O arquivo trafega criptografado e fica acessível apenas para você e o destinatário.</span>
+          </div>
+          <div class="tip danger">
+            <span class="tip-icon">🚫</span>
+            <span>Nunca envie em grupos públicos ou de trabalho — qualquer membro terá acesso permanente ao arquivo com dados pessoais.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- E-mail -->
+      <div class="ch-content" id="ch-email">
+        <div class="card">
+          <h3>E-mail</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Crie um novo e-mail e insira o endereço do destinatário</strong>
+                <p>Confirme o endereço antes de enviar — verifique letra por letra para evitar envio errado.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Coloque assunto claro</strong>
+                <p>Ex: <em>"PDF do RG para impressão"</em> — facilita o destinatário identificar o e-mail.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Anexe o PDF pelo botão de anexo</strong>
+                <p>Não cole o conteúdo no corpo do e-mail. Anexe o arquivo original.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Envie e peça confirmação de recebimento</strong>
+                <p>Solicite uma resposta simples quando o destinatário receber e conseguir abrir.</p>
+              </div>
+            </div>
+          </div>
+          <div class="tip info">
+            <span class="tip-icon">ℹ️</span>
+            <span>Prefira Gmail ou Outlook — ambos usam TLS em trânsito. Evite provedores desconhecidos. Confirme que está enviando do seu endereço correto.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Google Drive -->
+      <div class="ch-content" id="ch-drive">
+        <div class="card">
+          <h3>Google Drive / iCloud Drive</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Faça upload do PDF</strong>
+                <p>Acesse o Drive → Novo → Upload de arquivo. Aguarde o upload completar.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Clique com o botão direito → Compartilhar</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Adicione apenas o e-mail do destinatário</strong>
+                <p>Permissão: <strong>Leitor</strong>. Nunca selecione "Qualquer pessoa com o link".</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Copie o link e envie pelo WhatsApp ou e-mail</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <strong>Após confirmação de impressão, remova o acesso</strong>
+                <p>Abra Compartilhar novamente → clique no e-mail do destinatário → remover acesso.</p>
+              </div>
+            </div>
+          </div>
+          <div class="tip danger">
+            <span class="tip-icon">🚫</span>
+            <span>Nunca use <strong>"Qualquer pessoa com o link"</strong>. Se o link vazar por acidente (forward, histórico de chat), qualquer pessoa terá acesso ao documento.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Proteger com senha -->
+    <section class="section">
+      <h2><span class="sn">3</span> Proteger o PDF com senha</h2>
+      <p style="color:var(--muted); margin-bottom:16px; font-size:14px; line-height:1.6">
+        Adicionar senha garante que, mesmo que o arquivo chegue a alguém errado, não consiga ser aberto. Recomendado especialmente ao enviar por e-mail ou Drive.
+      </p>
+      <div class="card">
+        <div class="setting-list">
+          <div class="setting-row">
+            <span class="setting-key">PDF24 (online, gratuito)</span>
+            <span class="setting-val">Acesse <strong>pdf24.org</strong> → Proteger PDF → faça upload → defina a senha → baixe o arquivo protegido</span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-key">Adobe Acrobat (pago)</span>
+            <span class="setting-val">Ferramentas → Proteger → Proteger com senha → defina e confirme a senha → Salvar</span>
+          </div>
+          <div class="setting-row">
+            <span class="setting-key">macOS — Preview</span>
+            <span class="setting-val">Arquivo → Exportar como PDF → Permissões de segurança → Exigir senha para abertura → defina a senha</span>
+          </div>
+        </div>
+      </div>
+      <div class="tip ok">
+        <span class="tip-icon">🔐</span>
+        <span><strong>Envie a senha por canal diferente do arquivo.</strong> Ex: envie o PDF por e-mail e a senha separadamente pelo WhatsApp. Assim, interceptar um canal não basta.</span>
+      </div>
+    </section>
+
+    <!-- 4. Confirmar recebimento -->
+    <section class="section">
+      <h2><span class="sn">4</span> Confirmar o recebimento</h2>
+      <div class="card">
+        <ul class="checklist">
+          <li><strong>Peça confirmação ativa</strong> — o destinatário deve responder que recebeu e conseguiu abrir o arquivo</li>
+          <li><strong>Confirme ambos os arquivos</strong> — frente e verso recebidos e legíveis</li>
+          <li><strong>Defina prazo para impressão</strong> — o PDF não deve ficar parado sem necessidade no dispositivo do destinatário</li>
+          <li><strong>Peça aviso após imprimir</strong> — para que você saiba que pode revogar acessos e fazer limpeza</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 5. Após o envio -->
+    <section class="section">
+      <h2><span class="sn">5</span> Após o envio</h2>
+      <div class="card">
+        <ul class="checklist">
+          <li><strong>Revogar acesso no Drive</strong> — se enviou via Drive, remova o compartilhamento assim que receber confirmação de impressão</li>
+          <li><strong>Apagar cópias temporárias</strong> — delete versões que ficaram em Downloads, Desktop ou outros locais temporários</li>
+          <li><strong>Esvaziar a lixeira</strong> — arquivos na lixeira ainda ocupam espaço e podem ser recuperados</li>
+          <li><strong>Guardar o original com segurança</strong> — mantenha uma cópia do PDF original em local controlado (disco local criptografado ou nuvem privada)</li>
+        </ul>
+      </div>
+      <div class="tip info">
+        <span class="tip-icon">ℹ️</span>
+        <span>Quanto menos cópias de documentos pessoais existirem em lugares diferentes, menor a superfície de exposição. Centralize, não pulverize.</span>
+      </div>
+    </section>
+
+    <div class="page-nav">
+      <a class="nav-link" href="index.html">← Início</a>
+      <a class="nav-link next" href="receive.html">Receber →</a>
+    </div>
+
+  </div>
+
+  <script>
+    if (sessionStorage.getItem('rg_auth') !== '1') {
+      document.getElementById('auth-block').classList.remove('hidden');
+    } else {
+      document.getElementById('auth-block').classList.add('hidden');
+    }
+
+    function showCh(ch, event) {
+      document.querySelectorAll('.ch-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      document.getElementById('ch-' + ch).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+  </script>
+</body>
+</html>
