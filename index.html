@@ -34,6 +34,12 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* Aviso de lançamento de álbum do fotos (posto pelo _worker.js, estilos em
+       /destaque.css): com ele, a coluna vira de cima para baixo, o aviso em
+       cima e o PIN embaixo. */
+    body:has(> .lfc-dq) { flex-direction: column; gap: 12px; }
+    body > .lfc-dq { width: 100%; max-width: 480px; margin: 0; }
+
     /* ── PIN GATE ── */
     #gate {
       width: 100%;
